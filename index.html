@@ -1,0 +1,1264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#8c1c2b">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="St Bridget">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<style>*{box-sizing:border-box}body{margin:0}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<title>The St Bridget Prayers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500;600&display=swap">
+<style>
+/* Layout: one centered column on phones (two columns on an unfolded foldable or tablet).
+   The hero is a crown of thorns for the selected month; its beads are the days. */
+:root{
+  --bg:#f3eee5;            /* linen */
+  --paper:#fbf8f2;
+  --ink:#2a1a1c;
+  --muted:#6e5f5c;
+  --line:#e0d6c8;
+  --crimson:#8c1c2b;
+  --crimson-deep:#5e101b;
+  --crimson-light:#c2414f;
+  --blue:#1f4f8f;          /* Swedish blue */
+  --blue-soft:#e3eaf4;
+  --gold:#c49a3c;
+  --gold-ink:#5a4210;
+  --thorn:#8a7763;
+  --glow:rgba(190,40,55,.55);
+  --bead:#ebe3d6;
+  --bead-edge:#b9ab97;
+  --shadow:0 1px 2px rgba(42,26,28,.06),0 8px 24px rgba(42,26,28,.07);
+  --note:#f6ead2; --note-ink:#6b4f1d;
+  --f-display:"Cinzel","Trajan Pro",Georgia,serif;
+  --f-body:"EB Garamond",Garamond,Georgia,"Times New Roman",serif;
+  --f-ui:"Jost","Avenir Next","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141013; --paper:#1f191c; --ink:#f0e8e2; --muted:#a8999a; --line:#362c30;
+  --crimson:#d2404f; --crimson-deep:#9a2333; --crimson-light:#ef7d86; --blue:#8fb0e3; --blue-soft:#1c2637;
+  --gold:#d8b45e; --gold-ink:#2a1f08; --thorn:#6f6052; --glow:rgba(235,70,85,.6); --bead:#2c2427; --bead-edge:#5c4e51;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3); --note:#2b2316; --note-ink:#e6d09a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141013; --paper:#1f191c; --ink:#f0e8e2; --muted:#a8999a; --line:#362c30;
+  --crimson:#d2404f; --crimson-deep:#9a2333; --crimson-light:#ef7d86; --blue:#8fb0e3; --blue-soft:#1c2637;
+  --gold:#d8b45e; --gold-ink:#2a1f08; --thorn:#6f6052; --glow:rgba(235,70,85,.6); --bead:#2c2427; --bead-edge:#5c4e51;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3); --note:#2b2316; --note-ink:#e6d09a; color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55}
+.wrap{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px;display:flex;flex-direction:column;gap:20px}
+.cols{display:flex;flex-direction:column;gap:20px}
+.col{display:flex;flex-direction:column;gap:20px;min-width:0}
+@media (min-width:760px){
+  .wrap{max-width:1000px}
+  .cols{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;align-items:start}
+  .col-a{position:sticky;top:16px}
+}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
+
+header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.eyebrow{font-family:var(--f-ui);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--crimson);font-weight:500}
+h1{font-family:var(--f-display);font-weight:600;font-size:clamp(25px,6.6vw,36px);line-height:1.1;margin:4px 0 0;text-wrap:balance;letter-spacing:.01em}
+.theme-btn{flex:none;min-width:44px;height:44px;border-radius:22px;border:1px solid var(--line);background:var(--paper);font-family:var(--f-ui);font-size:13px;padding:0 14px;color:var(--muted)}
+.install-btn{display:inline-flex;align-items:center;gap:6px;color:#fff;background:var(--crimson);border-color:var(--crimson);font-weight:500;padding:0 14px}
+.lock-btn{padding:0;width:44px;display:grid;place-items:center;color:var(--crimson)}
+.head-btns{display:flex;gap:8px;flex:none}
+
+/* devotion switch */
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:16px;background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow)}
+.seg button{min-height:48px;border:none;border-radius:12px;background:none;font-family:var(--f-ui);font-size:14px;font-weight:500;color:var(--muted);line-height:1.2;padding:6px 8px}
+.seg button small{display:block;font-size:11.5px;font-weight:400;letter-spacing:.02em;opacity:.85}
+.seg button[aria-pressed="true"]{background:var(--crimson);color:#fff}
+
+.intent{background:var(--paper);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px}
+.label{font-family:var(--f-ui);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.intent-text{font-family:var(--f-body);font-size:22px;line-height:1.3;font-style:italic;margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.intent-text.empty{color:var(--muted)}
+.intent-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.meta{font-family:var(--f-ui);font-size:13px;color:var(--muted)}
+textarea{width:100%;box-sizing:border-box;min-height:96px;resize:vertical;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;padding:10px 12px}
+.link-btn{background:none;border:none;color:var(--blue);font-family:var(--f-ui);font-size:14px;font-weight:500;padding:8px 2px;min-height:40px}
+
+/* hero */
+.hero{background:var(--paper);border-radius:20px;box-shadow:var(--shadow);padding:14px 12px 16px;display:flex;flex-direction:column;gap:12px}
+.years{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 4px;scrollbar-width:none}
+.years::-webkit-scrollbar{display:none}
+.years button{flex:none;min-width:48px;height:48px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font-family:var(--f-ui);font-size:13px;font-weight:500;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0 8px}
+.years button i{display:block;width:30px;height:3px;border-radius:2px;background:var(--bead);overflow:hidden}
+.years button i b{display:block;height:100%;background:var(--crimson)}
+.years button.sel{border-color:var(--crimson);background:var(--crimson);color:#fff}
+.years button.sel i{background:rgba(255,255,255,.35)}.years button.sel i b{background:#fff}
+.years button.cur:not(.sel){border-color:var(--gold)}
+svg.crown{display:block;width:100%;max-width:420px;margin:0 auto;height:auto;overflow:visible;touch-action:manipulation}
+.thorn-a,.thorn-b{fill:none;stroke:var(--thorn);stroke-width:2.2;stroke-linecap:round}
+.thorn-b{stroke-width:1.8;opacity:.8}
+.spike{fill:var(--thorn)}
+.cross-gold{fill:var(--gold)}
+.cross-line{stroke:var(--gold-ink);stroke-opacity:.35;stroke-width:1}
+.bead{cursor:pointer;outline:none}
+.bead .hit{fill:transparent}
+.bead .ring{fill:none;stroke:var(--blue);stroke-width:2.2;opacity:0}
+.bead.today .ring{opacity:1;animation:pulse 2.4s ease-in-out infinite}
+.bead:focus-visible .ring{opacity:1;stroke-dasharray:3 3}
+.bead .b{fill:var(--bead);stroke:var(--bead-edge);stroke-width:1.2;transition:fill .6s ease,stroke .6s ease}
+.bead.future .b{opacity:.65}
+.bead.missed .b{fill:transparent;stroke-dasharray:2 2.4;stroke:var(--crimson-light);opacity:.85}
+.bead.done .b{fill:var(--crimson);stroke:var(--crimson-deep)}
+.bead.done .drop{opacity:1}
+.bead .drop{fill:var(--gold);opacity:0;transition:opacity .6s ease}
+.bead.done.made .b{stroke:var(--gold);stroke-width:1.6;stroke-dasharray:2.5 1.8}
+.bead.done .gl{filter:drop-shadow(0 0 4px var(--glow))}
+.bead.done.just .gl{animation:glow 1.8s ease-out}
+.dnum{font-family:var(--f-ui);font-size:9.5px;fill:var(--muted);text-anchor:middle;dominant-baseline:middle}
+.dnum.today{fill:var(--blue);font-weight:600;font-size:11px}
+.c-small{font-family:var(--f-ui);font-size:11px;letter-spacing:.14em;text-transform:uppercase;fill:var(--muted);text-anchor:middle}
+.c-big{font-family:var(--f-display);font-weight:600;font-size:38px;fill:var(--ink);text-anchor:middle}
+.c-cap{font-family:var(--f-body);font-style:italic;font-size:15px;fill:var(--crimson);text-anchor:middle}
+.refl-star{fill:var(--gold);stroke:var(--gold-ink);stroke-width:1;stroke-linejoin:round}
+@keyframes pulse{0%,100%{stroke-opacity:.25}50%{stroke-opacity:1}}
+@keyframes glow{0%{filter:drop-shadow(0 0 0 var(--glow))}35%{filter:drop-shadow(0 0 14px var(--glow))}100%{filter:drop-shadow(0 0 4px var(--glow))}}
+
+.months{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.months button{border:1px solid transparent;background:none;border-radius:12px;padding:4px 0 2px;display:flex;flex-direction:column;align-items:center;gap:0;min-height:58px;font-family:var(--f-ui);font-size:11.5px;color:var(--muted)}
+.months button svg{width:36px;height:36px;display:block}
+.months .mr-bg{fill:none;stroke:var(--bead);stroke-width:4}
+.months .mr-fg{fill:none;stroke:var(--crimson);stroke-width:4;stroke-linecap:round;transform:rotate(-90deg);transform-origin:center}
+.months .mr-dot{fill:var(--gold)}
+.months button.sel{border-color:var(--blue);background:var(--blue-soft);color:var(--blue);font-weight:600}
+.months button.cur{color:var(--ink);font-weight:600}
+.hero-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 14px;font-family:var(--f-ui);font-size:12px;color:var(--muted)}
+.hero-legend span{display:inline-flex;align-items:center;gap:5px}
+.hero-legend i{width:11px;height:11px;border-radius:50%;display:inline-block;border:1.4px solid var(--bead-edge);background:var(--bead)}
+.hero-legend i.d{background:var(--crimson);border-color:var(--crimson-deep)}
+.hero-legend i.m{background:var(--crimson);border:1.6px dashed var(--gold)}
+.hero-legend i.x{background:transparent;border:1.4px dashed var(--crimson-light)}
+.hero-legend i.t{background:var(--bead);border:2px solid var(--blue)}
+
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:var(--paper);border-radius:14px;box-shadow:var(--shadow);padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.stat b{font-family:var(--f-display);font-weight:600;font-size:22px;line-height:1.15;color:var(--ink);overflow-wrap:anywhere}
+.stat b small{font-family:var(--f-ui);font-size:13px;font-weight:400;color:var(--muted)}
+.stat .bar{height:5px;border-radius:3px;background:var(--bead);overflow:hidden;margin-top:6px}
+.stat .bar i{display:block;height:100%;background:var(--crimson);border-radius:3px}
+.stat.wide{grid-column:1/-1}
+
+.note{background:var(--note);color:var(--note-ink);border-radius:12px;padding:12px 14px;font-size:16.5px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{min-height:52px;border-radius:14px;border:1px solid var(--line);background:var(--paper);font-family:var(--f-ui);font-size:15px;font-weight:500;padding:10px 14px;color:var(--ink)}
+.btn.primary{background:var(--crimson);border-color:var(--crimson);color:#fff}
+.btn.rose{background:var(--crimson-light);border-color:var(--crimson-light);color:#fff}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--gold-ink)}
+.btn.blue{background:var(--blue);border-color:var(--blue);color:var(--paper)}
+.btn[disabled]{opacity:.55;cursor:default}
+.sync{font-family:var(--f-ui);font-size:12px;color:var(--muted);text-align:center}
+
+.history h2{font-family:var(--f-display);font-weight:600;font-size:22px;margin:0 0 8px}
+.hist-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.hist-item{border-top:1px solid var(--line)}
+.hist-item:last-child{border-bottom:1px solid var(--line)}
+.hist-btn{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:none;border:none;padding:14px 2px;min-height:64px}
+.hist-body{flex:1;min-width:0}
+.hist-intent{font-family:var(--f-body);font-size:19px;font-style:italic;line-height:1.25;overflow-wrap:anywhere;margin:2px 0}
+.minibar{height:6px;border-radius:3px;background:var(--bead);overflow:hidden;margin:6px 0 4px}
+.minibar i{display:block;height:100%;background:var(--crimson)}
+.hist-go{flex:none;font-family:var(--f-ui);font-size:14px;font-weight:500;color:var(--blue)}
+.chip{display:inline-block;font-family:var(--f-ui);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:99px;background:var(--blue-soft);color:var(--blue);margin-right:6px}
+.chip.done{background:var(--crimson);color:#fff}
+.chip.kind{background:var(--note);color:var(--note-ink)}
+.empty-hist{color:var(--muted);font-style:italic;font-size:16px}
+
+/* overlays */
+.overlay{position:fixed;inset:0;background:rgba(20,10,12,.45);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--paper);color:var(--ink);width:100%;max-width:680px;max-height:92%;overflow:auto;border-radius:20px 20px 0 0;box-sizing:border-box;padding:18px max(18px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));box-shadow:0 -10px 40px rgba(0,0,0,.2)}
+.sheet h3{font-family:var(--f-display);font-weight:600;font-size:23px;margin:0;line-height:1.2}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;gap:10px;position:sticky;top:-18px;background:var(--paper);padding:6px 0 10px;z-index:2}
+.head-left{display:flex;align-items:center;gap:10px;min-width:0;flex-wrap:wrap}
+.close{flex:none;width:44px;height:44px;border-radius:22px;border:1px solid var(--line);background:var(--bg);font-size:22px;line-height:1}
+.lang-btn{display:inline-flex;align-items:center;gap:2px;min-height:40px;border:1px solid var(--line);border-radius:99px;padding:3px;background:var(--bg)}
+.lang-btn span{font-family:var(--f-ui);font-size:13px;font-weight:600;letter-spacing:.04em;padding:6px 11px;border-radius:99px;color:var(--muted);transition:background .2s,color .2s}
+.lang-btn[data-lang="en"] span[data-l="en"],.lang-btn[data-lang="la"] span[data-l="la"]{background:var(--crimson);color:#fff}
+.pray-intent{background:var(--blue-soft);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.pray-intent p{margin:4px 0 0;font-family:var(--f-body);font-style:italic;font-size:20px;line-height:1.3;white-space:pre-wrap;overflow-wrap:anywhere}
+.pray-sub{margin:0 0 12px}
+details.psec{border-top:1px solid var(--line)}
+details.psec:last-of-type{border-bottom:1px solid var(--line)}
+summary{list-style:none;display:flex;align-items:center;gap:12px;min-height:56px;cursor:pointer;font-family:var(--f-body);font-size:20px;font-weight:600;line-height:1.25;padding:6px 0}
+summary::-webkit-details-marker{display:none}
+summary .n{flex:none;min-width:30px;height:30px;padding:0 4px;border-radius:15px;border:1px solid var(--gold);color:var(--gold-ink);background:var(--gold);font-family:var(--f-ui);font-size:13px;font-weight:600;display:grid;place-items:center}
+summary .n.c{background:none;color:var(--crimson);border-color:var(--crimson);font-family:var(--f-body);font-size:17px}
+summary .t{flex:1;min-width:0}
+summary::after{content:"+";flex:none;margin-left:auto;font-family:var(--f-ui);font-size:24px;font-weight:400;color:var(--muted);width:24px;text-align:center}
+details[open] > summary::after{content:"–"}
+details.sub{border:none;margin:0 0 4px;background:var(--bg);border-radius:12px;padding:0 12px}
+details.sub > summary{min-height:46px;font-family:var(--f-ui);font-size:14.5px;font-weight:500;color:var(--blue);letter-spacing:.02em}
+details.sub > summary::after{font-size:20px}
+details.sub .prayer{padding:0 0 12px;font-size:17.5px}
+.prayer{font-size:19px;line-height:1.65;max-width:64ch;padding:0 2px 18px}
+.prayer p{margin:0 0 .8em}
+.prayer .rub{font-family:var(--f-ui);font-size:13px;color:var(--muted);letter-spacing:.02em;margin:2px 0 10px}
+.prayer blockquote{margin:0 0 .8em;padding-left:14px;border-left:3px solid var(--gold);font-style:italic}
+.promises{padding-left:0;list-style:none;counter-reset:pr;margin:0 0 .8em}
+.promises li{counter-increment:pr;display:flex;gap:12px;margin-bottom:10px;line-height:1.5}
+.promises li::before{content:counter(pr);flex:none;width:26px;height:26px;border-radius:13px;background:var(--note);color:var(--note-ink);font-family:var(--f-ui);font-size:12px;font-weight:600;display:grid;place-items:center;margin-top:2px}
+.pnote{font-size:16px;color:var(--muted);font-style:italic}
+.dialog{border-radius:20px;margin:0 auto}
+.dialog .row{display:flex;gap:10px;margin-top:14px}
+.dialog .row .btn{flex:1}
+.popup-day{font-family:var(--f-display);font-size:22px;font-weight:600}
+.kind-pick{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 14px}
+.kind-pick button{border:1.5px solid var(--line);background:var(--bg);border-radius:14px;padding:12px;text-align:left;min-height:84px;display:flex;flex-direction:column;gap:2px}
+.kind-pick button b{font-family:var(--f-display);font-size:16px;font-weight:600}
+.kind-pick button span{font-family:var(--f-ui);font-size:12.5px;color:var(--muted);line-height:1.35}
+.kind-pick button[aria-pressed="true"]{border-color:var(--crimson);background:color-mix(in srgb,var(--crimson) 10%,var(--paper))}
+
+.petal-fall{position:fixed;top:-30px;width:13px;height:17px;border-radius:70% 0 70% 0;background:var(--crimson);opacity:.9;z-index:60;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translate(var(--dx),110vh) rotate(var(--rot));opacity:.2}}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);font-family:var(--f-ui);font-size:14px;padding:10px 16px;border-radius:99px;z-index:70;max-width:calc(100% - 32px);text-align:center}
+.celeb{text-align:center;padding-top:26px}
+.celeb h3{font-size:28px;margin-top:10px}
+.celeb p{font-size:18px}
+
+/* PIN lock */
+body.locked .wrap,body.locked .overlay{filter:blur(18px);pointer-events:none;user-select:none}
+.lock{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:rgba(140,120,110,.35);background:color-mix(in srgb,var(--bg) 55%,transparent);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lock-card{background:var(--paper);border-radius:24px;box-shadow:0 20px 60px rgba(20,10,12,.28);width:100%;max-width:340px;padding:26px 22px 18px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.lock-medal{width:54px;height:54px;border-radius:50%;background:var(--crimson);display:grid;place-items:center}
+.lock-card h2{font-family:var(--f-display);font-weight:600;font-size:23px;margin:8px 0 0}
+.noscript-note{font-family:var(--f-ui);font-size:14px;line-height:1.45;color:var(--crimson);background:var(--note);border-radius:10px;padding:10px 12px;margin:6px 0 0}
+.lock-msg{font-family:var(--f-ui);font-size:14px;color:var(--muted);min-height:20px;margin:0}
+.lock-msg.err{color:var(--crimson)}
+.dots{display:flex;gap:16px;margin:14px 0 18px}
+.dots i{width:16px;height:16px;border-radius:50%;border:2px solid var(--crimson);box-sizing:border-box;transition:background .15s}
+.dots i.on{background:var(--crimson)}
+.dots.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
+.keypad{display:grid;grid-template-columns:repeat(3,72px);gap:12px;justify-content:center}
+.keypad button{width:72px;height:72px;border-radius:50%;border:1px solid var(--line);background:var(--bg);font-family:var(--f-ui);font-size:26px;font-weight:500}
+.keypad button:active{background:var(--blue-soft)}
+.keypad .ghost{border:none;background:none;font-size:15px;color:var(--muted)}
+.lock-foot{display:flex;gap:16px;justify-content:center;margin-top:8px;min-height:40px}
+@media (max-height:600px){.keypad{grid-template-columns:repeat(3,60px);gap:8px}.keypad button{width:60px;height:60px;font-size:22px}.lock-card{padding:16px}}
+.site-foot{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:2px 5px;text-align:center;font-family:var(--f-ui);font-size:12px;letter-spacing:0;color:var(--muted);padding-top:12px;border-top:1px solid var(--line)}
+.site-foot a{color:var(--blue);text-decoration:none;font-weight:500}
+.site-foot a:hover{text-decoration:underline}
+.site-foot .mail-link{display:inline-grid;place-items:center;min-width:24px;min-height:32px}
+.install-steps{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:12px;counter-reset:st}
+.install-steps li{display:flex;gap:12px;align-items:flex-start;font-size:17px;line-height:1.5;counter-increment:st}
+.install-steps li::before{content:counter(st);flex:none;width:28px;height:28px;border-radius:14px;background:var(--gold);color:var(--gold-ink);font-family:var(--f-ui);font-size:13px;font-weight:600;display:grid;place-items:center;margin-top:1px}
+.install-steps svg{vertical-align:-3px;color:var(--blue)}
+.j-head{font-family:var(--f-ui);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:14px 0 2px}
+.j-list{list-style:none;margin:0;padding:0}
+.j-item{border-top:1px solid var(--line);padding:12px 0;display:flex;flex-direction:column;gap:4px}
+.j-text{font-family:var(--f-body);font-size:19px;font-style:italic;line-height:1.3;margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.j-item.done .j-text{color:var(--muted)}
+.j-actions{display:flex;flex-wrap:wrap;gap:0 16px}
+.j-actions .link-btn{min-height:36px;padding:4px 0}
+.j-empty{color:var(--muted);font-style:italic;font-size:16px;margin:6px 0}
+.pick-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.pick-chips button{border:1px solid var(--line);background:var(--bg);border-radius:16px;padding:8px 12px;font-family:var(--f-body);font-style:italic;font-size:16px;line-height:1.3;max-width:100%;text-align:left;overflow-wrap:anywhere;color:var(--ink)}
+.pick-chips button.sel{border-color:var(--crimson);background:var(--blue-soft)}
+@media (max-width:430px){.install-btn span{display:none}.install-btn{padding:0;width:44px;justify-content:center}}
+@media (max-width:360px){.head-btns{gap:6px}.theme-btn{min-width:40px;height:40px}.lock-btn{width:40px}.months{grid-template-columns:repeat(4,1fr)}}
+.refl-preview{margin-top:12px;background:var(--bg);border-radius:12px;padding:10px 14px;max-height:180px;overflow:auto}
+.refl-preview .label{display:inline-flex;align-items:center;gap:6px}
+.refl-preview p{margin:4px 0 0;font-family:var(--f-body);font-style:italic;font-size:18px;line-height:1.35;white-space:pre-wrap;overflow-wrap:anywhere}
+textarea.notepad{min-height:224px;line-height:32px;padding:4px 12px;margin-top:6px;background-color:var(--paper);background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 4px;background-attachment:local}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body class="locked">
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow" id="eyebrow">Fifteen prayers · One year</div>
+      <h1>The St Bridget Prayers</h1>
+    </div>
+    <div class="head-btns">
+      <button class="theme-btn install-btn" id="installBtn" hidden aria-label="Install this app on your home screen">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg><span>Install</span>
+      </button>
+      <button class="theme-btn lock-btn" id="lockNowBtn" aria-label="Lock the page" title="Lock">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="11" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/><circle cx="12" cy="16" r="1.4" fill="currentColor" stroke="none"/></svg>
+      </button>
+      <button class="theme-btn lock-btn" id="journalBtn" aria-label="Open intentions journal" title="Intentions journal">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 2.5v3M15 2.5v3M9 11h6M9 15h4"/></svg>
+      </button>
+      <button class="theme-btn" id="themeBtn" aria-label="Change light or dark mode">Auto</button>
+    </div>
+  </header>
+
+  <div class="seg" id="kindSeg" role="group" aria-label="Choose a devotion">
+    <button data-kind="one" aria-pressed="true">One year<small>15 prayers a day</small></button>
+    <button data-kind="twelve" aria-pressed="false">Twelve years<small>7 prayers a day</small></button>
+  </div>
+
+  <div class="cols">
+    <div class="col col-a">
+      <section class="hero" aria-label="Your days of prayer">
+        <div class="years" id="years" hidden role="tablist" aria-label="Choose a year"></div>
+        <svg class="crown" id="crown" viewBox="0 0 360 360" role="group" aria-label="Days of this month"></svg>
+        <div class="months" id="months" role="tablist" aria-label="Choose a month"></div>
+        <div class="hero-legend" aria-hidden="true"><span><i class="d"></i>Prayed</span><span><i class="m"></i>Made up</span><span><i class="x"></i>Missed</span><span><i class="t"></i>Today</span></div>
+      </section>
+    </div>
+    <div class="col col-b">
+      <section class="intent" id="intentCard" aria-live="polite"></section>
+      <section class="stats" id="stats" aria-label="Your progress"></section>
+      <div class="note" id="skipNote" hidden></div>
+      <div class="actions">
+        <button class="btn primary" id="prayBtn">Today’s Prayers</button>
+        <button class="btn" id="newBtn">Start a New Year</button>
+      </div>
+      <div class="sync">Your history is saved on this phone only.
+        <div style="display:flex;flex-wrap:wrap;column-gap:16px;justify-content:center;margin-top:4px">
+          <button class="link-btn" id="exportBtn">Save a backup</button>
+          <button class="link-btn" id="importBtn">Restore a backup</button>
+          <button class="link-btn" id="changePinBtn">Change PIN</button>
+          <button class="link-btn" id="clearHistBtn" style="color:var(--crimson)">Clear history</button>
+          <input type="file" id="importFile" accept=".json,application/json" hidden>
+        </div></div>
+      <section class="history">
+        <h2>Your years of prayer</h2>
+        <ul class="hist-list" id="hist"></ul>
+      </section>
+    </div>
+  </div>
+  <footer class="site-foot">
+    <span>Jacoby / Parden Web Apps 2026</span><span class="sep">-</span><span id="appVersion">v1</span><span class="sep">-</span><a href="https://venmo.com/James-Parden" target="_blank" rel="noopener">Donate</a><span class="sep">-</span><a href="mailto:jdparden@gmail.com?subject=St%20Bridget%20Prayers" class="mail-link" aria-label="Email jdparden@gmail.com" title="Email jdparden@gmail.com"><svg width="18" height="14" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="15" rx="2.5"/><path d="M2.5 3l9.5 7 9.5-7"/></svg></a>
+  </footer>
+</div>
+
+<div class="lock" id="lockScreen" role="dialog" aria-modal="true" aria-labelledby="lockTitle">
+  <div class="lock-card">
+    <div class="lock-medal" aria-hidden="true"><svg width="24" height="30" viewBox="0 0 24 30"><path d="M10 0h4v8h8v4h-8v18h-4V12H2V8h8z" fill="#d8b45e"/></svg></div>
+    <h2 id="lockTitle">Enter your PIN</h2>
+    <p class="noscript-note" id="noJsNote">This preview can’t run the tracker. On an iPhone, open it from a web address in Safari instead of from Files, Messages or Mail.</p>
+    <p class="lock-msg" id="lockMsg" aria-live="polite"></p>
+    <div class="dots" id="pinDots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="keypad" id="keypad">
+      <button data-k="1">1</button><button data-k="2">2</button><button data-k="3">3</button>
+      <button data-k="4">4</button><button data-k="5">5</button><button data-k="6">6</button>
+      <button data-k="7">7</button><button data-k="8">8</button><button data-k="9">9</button>
+      <button class="ghost" id="lockCancel" style="visibility:hidden">Cancel</button><button data-k="0">0</button><button class="ghost" data-k="del" aria-label="Delete last digit">⌫</button>
+    </div>
+    <div class="lock-foot" id="lockFoot"><button class="link-btn" id="forgotBtn" hidden>Forgot PIN?</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="prayOverlay" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="prayTitle">
+    <div class="sheet-head"><div class="head-left"><h3 id="prayTitle">Today’s Prayers</h3><button class="lang-btn" id="langBtn" data-lang="en" aria-label="Show prayers in Latin"><span data-l="en">English</span><span data-l="la">Latin</span></button></div><button class="close" id="prayClose" aria-label="Close prayers">×</button></div>
+    <div id="prayBody"></div>
+  </div>
+</div>
+
+<div class="overlay" id="newOverlay" hidden>
+  <div class="sheet dialog" role="dialog" aria-modal="true" aria-labelledby="newTitle">
+    <h3 id="newTitle">Begin a new year of prayer</h3>
+    <p class="meta" id="newMeta" style="margin:6px 0 10px"></p>
+    <span class="label">Devotion</span>
+    <div class="kind-pick" id="kindPick">
+      <button type="button" data-kind="one"><b>One year</b><span>The 15 prayers, with 15 Our Fathers and 15 Hail Marys, every day for a year</span></button>
+      <button type="button" data-kind="twelve"><b>Twelve years</b><span>The 7 prayers, with 7 Our Fathers and 7 Hail Marys, every day for 12 years</span></button>
+    </div>
+    <label class="label" for="newIntent">Your intention</label>
+    <textarea id="newIntent" placeholder="Who or what are you praying for?" style="margin-top:6px"></textarea>
+    <div id="newPick"></div>
+    <div class="row"><button class="btn" id="newCancel">Cancel</button><button class="btn primary" id="newGo">Begin today</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="installOverlay" hidden>
+  <div class="sheet dialog" role="dialog" aria-modal="true" aria-labelledby="installTitle">
+    <h3 id="installTitle">Add to your home screen</h3>
+    <p class="meta" style="margin:6px 0 14px">The prayers open like an app, work offline, and keep your progress on this phone.</p>
+    <ol class="install-steps" id="installSteps"></ol>
+    <div class="row"><button class="btn primary" id="installDone">Got it</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="journalOverlay" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="journalTitle">
+    <div class="sheet-head"><h3 id="journalTitle">Intentions journal</h3><button class="close" id="journalClose" aria-label="Close journal">×</button></div>
+    <p class="meta" style="margin:0 0 14px">Write down intentions as they come to you. When it’s time to begin a new year of prayer, pick one from here.</p>
+    <label class="label" for="journalInput">New intention</label>
+    <textarea id="journalInput" placeholder="Someone or something to pray for…" style="margin-top:6px;min-height:80px"></textarea>
+    <div class="row" style="margin-top:8px;display:flex"><button class="btn primary" id="journalAdd" style="flex:1">Add to journal</button></div>
+    <div id="journalList" style="margin-top:18px"></div>
+  </div>
+</div>
+
+<div class="overlay" id="reflOverlay" hidden>
+  <div class="sheet dialog" role="dialog" aria-modal="true" aria-labelledby="reflTitle">
+    <h3 id="reflTitle">Reflection</h3>
+    <p class="meta" id="reflMeta" style="margin:4px 0 12px"></p>
+    <label class="label" for="reflText">What stood out to you while you prayed?</label>
+    <textarea id="reflText" class="notepad" placeholder="A word, a line of a prayer, a thought that stayed with you…"></textarea>
+    <div class="row"><button class="btn" id="reflCancel">Cancel</button><button class="btn primary" id="reflSave">Save reflection</button></div>
+    <div style="text-align:center;margin-top:6px"><button class="link-btn" id="reflDelete" style="color:var(--crimson)" hidden>Delete reflection</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="dayOverlay" hidden>
+  <div class="sheet dialog" role="dialog" aria-modal="true" aria-labelledby="dayTitle">
+    <div class="popup-day" id="dayTitle">Day 1</div>
+    <p id="dayWhen" style="margin:4px 0 0"></p>
+    <div class="refl-preview" id="dayRefl" hidden><span class="label"><svg width="13" height="13" viewBox="-8 -8 16 16" aria-hidden="true"><polygon class="refl-star" points="0.00,-7.50 1.88,-2.59 7.13,-2.32 3.04,0.99 4.41,6.07 0.00,3.20 -4.41,6.07 -3.04,0.99 -7.13,-2.32 -1.88,-2.59"/></svg> Your reflection</span><p id="dayReflText"></p></div>
+    <div id="dayReflActs" class="j-actions" hidden style="justify-content:center;margin-top:4px"><button class="link-btn" id="reflView">View</button><button class="link-btn" id="reflEdit">Edit</button><button class="link-btn" id="reflDel" style="color:var(--crimson)">Delete</button></div>
+    <div class="row" id="dayRowMain"><button class="btn" id="dayKeep">Keep it</button><button class="btn rose" id="dayUnmark">Unmark day</button></div>
+    <div class="row" id="dayRowRefl" style="margin-top:8px"><button class="btn gold" id="dayRefBtn">Add reflection</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="missOverlay" hidden>
+  <div class="sheet dialog" role="dialog" aria-modal="true" aria-labelledby="missTitle">
+    <div class="popup-day" id="missTitle">Day 1</div>
+    <p id="missWhen" style="margin:4px 0 0"></p>
+    <p class="meta" style="margin:8px 0 0">This day wasn’t marked. If you’ve prayed it since, you can mark it as made up.</p>
+    <div class="row"><button class="btn" id="missNo">Not yet</button><button class="btn primary" id="missYes">Mark as made up</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="viewOverlay" hidden>
+  <div class="sheet dialog" role="dialog" aria-modal="true" aria-labelledby="viewTitle">
+    <div class="sheet-head"><h3 id="viewTitle">Reflection</h3><button class="close" id="viewClose" aria-label="Close reflection">×</button></div>
+    <p class="meta" id="viewMeta" style="margin:0 0 8px"></p>
+    <p id="viewText" style="font-style:italic;font-size:20px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere;margin:0"></p>
+  </div>
+</div>
+
+<div class="overlay" id="celebOverlay" hidden>
+  <div class="sheet dialog celeb" role="dialog" aria-modal="true" aria-labelledby="celebTitle">
+    <svg width="54" height="68" viewBox="0 0 24 30" aria-hidden="true"><path d="M10 0h4v8h8v4h-8v18h-4V12H2V8h8z" fill="var(--gold)"/></svg>
+    <h3 id="celebTitle">Deo gratias</h3>
+    <p id="celebText"></p>
+    <div class="row"><button class="btn primary" id="celebDone">Amen</button></div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   ✎  EDIT PRAYERS HERE
+   Text from theworkofgod.org (Saint Bridget's prayers), word for word.
+   Each paragraph is its own string in a list. Keep the quotes and commas.
+   PRAYERS is English; PRAYERS_LA (below) is the Latin shown by the toggle.
+   ===================================================================== */
+const PRAYERS = {
+  ourFather: "Our Father, who art in heaven, hallowed be Thy name; Thy kingdom come; Thy will be done on earth as it is in heaven. Give us this day our daily bread; and forgive us our trespasses as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen.",
+  hailMary: "Hail Mary, full of grace, the Lord is with thee. Blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.",
+
+  // ---------- Devotion for one year: 15 prayers ----------
+  one: {
+    sheetTitle: "15 Prayers of Saint Bridget",
+    introTitle: "Saint Bridget and the 5,475 blows",
+    intro: [
+      "Saint Bridget prayed for a long time to know how many blows Our Lord suffered during His terrible Passion. Rewarding her patience, one day He appeared to her and said:",
+      "\"I received 5475 blows upon My Body. If you wish to honor them in some way, recite fifteen Our Fathers and fifteen Hail Marys with the following Prayers, which I Myself shall teach you, for an entire year. When the year is finished, you will have honored each of My Wounds.\""
+    ],
+    opening: null,
+    rubric: "Our Father - Hail Mary",
+    prayers: [
+      {title:"First Prayer", text:[
+        "O Jesus Christ! Eternal Sweetness to those who love Thee, joy surpassing all joy and all desire, Salvation and Hope of all sinners, Who hast proved that Thou hast no greater desire than to be among men, even assuming human nature at the fullness of time for the love of men, recall all the sufferings Thou hast endured from the instant of Thy conception, and especially during Thy Passion, as it was decreed and ordained from all eternity in the Divine plan.",
+        "Remember, O Lord, that during the Last Supper with Thy disciples, having washed their feet, Thou gavest them Thy Most Precious Body and Blood, and while at the same time Thou didst sweetly console them, Thou didst foretell them Thy coming Passion.",
+        "Remember the sadness and bitterness which Thou didst experience in Thy Soul as Thou Thyself bore witness saying: \"My Soul is sorrowful even unto death.\"",
+        "Remember all the fear, anguish and pain that Thou didst suffer in Thy delicate Body before the torment of the crucifixion, when, after having prayed three times, bathed in a sweat of blood, Thou wast betrayed by Judas, Thy disciple, arrested by the people of a nation Thou hadst chosen and elevated, accused by false witnesses, unjustly judged by three judges during the flower of Thy youth and during the solemn Paschal season.",
+        "Remember that Thou wast despoiled of Thy garments and clothed in those of derision; that Thy Face and Eyes were veiled, that Thou wast buffeted, crowned with thorns, a reed placed in Thy Hands, that Thou was crushed with blows and overwhelmed with affronts and outrages.",
+        "In memory of all these pains and sufferings which Thou didst endure before Thy Passion on the Cross, grant me before my death true contrition, a sincere and entire confession, worthy satisfaction and the remission of all my sins. Amen."]},
+      {title:"Second Prayer", text:[
+        "O Jesus! True liberty of angels, Paradise of delights, remember the horror and sadness which Thou didst endure when Thy enemies, like furious lions, surrounded Thee, and by thousands of insults, spits, blows, lacerations and other unheard-of-cruelties, tormented Thee at will. In consideration of these torments and insulting words, I beseech Thee, O my Savior, to deliver me from all my enemies, visible and invisible, and to bring me, under Thy protection, to the perfection of eternal salvation. Amen."]},
+      {title:"Third Prayer", text:[
+        "O Jesus! Creator of Heaven and earth whom nothing can encompass or limit, Thou Who dost enfold and hold all under Thy Loving power, remember the very bitter pain Thou didst suffer when the Jews nailed Thy Sacred Hands and Feet to the Cross by blow after blow with big blunt nails, and not finding Thee in a pitiable enough state to satisfy their rage, they enlarged Thy Wounds, and added pain to pain, and with indescribable cruelty stretched Thy Body on the Cross, pulled Thee from all sides, thus dislocating Thy Limbs.",
+        "I beg of Thee, O Jesus, by the memory of this most Loving suffering of the Cross, to grant me the grace to fear Thee and to Love Thee. Amen."]},
+      {title:"Fourth Prayer", text:[
+        "O Jesus! Heavenly Physician, raised aloft on the Cross to heal our wounds with Thine, remember the bruises which Thou didst suffer and the weakness of all Thy Members which were distended to such a degree that never was there pain like unto Thine. From the crown of Thy Head to the Soles of Thy Feet there was not one spot on Thy Body that was not in torment, and yet, forgetting all Thy sufferings, Thou didst not cease to pray to Thy Heavenly Father for Thy enemies, saying: \"Father forgive them for they know not what they do.\"",
+        "Through this great Mercy, and in memory of this suffering, grant that the remembrance of Thy Most Bitter Passion may effect in us a perfect contrition and the remission of all our sins. Amen."]},
+      {title:"Fifth Prayer", text:[
+        "O Jesus! Mirror of eternal splendor, remember the sadness which Thou experienced, when contemplating in the light of Thy Divinity the predestination of those who would be saved by the merits of Thy Sacred Passion, Thou didst see at the same time, the great multitude of reprobates who would be damned for their sins, and Thou didst complain bitterly of those hopeless lost and unfortunate sinners.",
+        "Through the abyss of compassion and pity, and especially through the goodness which Thou displayed to the good thief when Thou saidst to him: \"This day, thou shalt be with Me in Paradise.\" I beg of Thee, O Sweet Jesus, that at the hour of my death, Thou wilt show me mercy. Amen."]},
+      {title:"Sixth Prayer", text:[
+        "O Jesus! Beloved and most desirable King, remember the grief Thou didst suffer, when naked and like a common criminal, Thou was fastened and raised on the Cross, when all Thy relatives and friends abandoned Thee, except Thy Beloved Mother, who remained close to Thee during Thy agony and whom Thou didst entrust to Thy faithful disciple when Thou saidst to Mary: \"Woman, behold thy son!\" and to Saint John: \"Son, behold thy Mother!\"",
+        "I beg of Thee O my Savior, by the sword of sorrow which pierced the soul of Thy holy Mother, to have compassion on me in all my affliction and tribulations, both corporal and spiritual, and to assist me in all my trials, and especially at the hour of my death. Amen."]},
+      {title:"Seventh Prayer", text:[
+        "O Jesus! Inexhaustible Fountain of compassion, Who by a profound gesture of Love, said from the Cross: \"I thirst!\" suffered from the thirst for the salvation of the human race. I beg of Thee O my Savior, to inflame in our hearts the desire to tend toward perfection in all our acts; and to extinguish in us the concupiscence of the flesh and the ardor of worldly desires. Amen."]},
+      {title:"Eighth Prayer", text:[
+        "O Jesus! Sweetness of hearts, delight of the spirit, by the bitterness of the vinegar and gall which Thou didst taste on the Cross for Love of us, grant us the grace to receive worthily Thy Precious Body and Blood during our life and at the hour of our death, that they may serve as a remedy and consolation for our souls. Amen."]},
+      {title:"Nineth Prayer", text:[
+        "O Jesus! Royal virtue, joy of the mind, recall the pain Thou didst endure when plunged in an ocean of bitterness at the approach of death, insulted, outraged by the Jews, Thou didst cry out in a loud voice that Thou was abandoned by Thy Father, saying: \"My God, My God, why hast Thou forsaken me?\"",
+        "Through this anguish, I beg of Thee, O my Savior, not to abandon me in the terrors and pains of my death. Amen."]},
+      {title:"Tenth Prayer", text:[
+        "O Jesus! Who art the beginning and end of all things, life and virtue, remember that for our sakes Thou was plunged in an abyss of suffering from the soles of Thy Feet to the crown of Thy Head. In consideration of the enormity of Thy Wounds, teach me to keep, through pure love, Thy Commandments, whose way is wide and easy for those who love Thee. Amen."]},
+      {title:"Eleventh Prayer", text:[
+        "O Jesus! Deep abyss of mercy, I beg of Thee, in memory of Thy Wounds which penetrated to the very marrow of Thy Bones and to the depth of Thy Being, to draw me, a miserable sinner, overwhelmed by my offenses, away from sin and to hide me from Thy Face justly irritated against me, hide me in Thy Wounds, until Thy anger and just indignation shall have passed away. Amen."]},
+      {title:"Twelveth Prayer", text:[
+        "O Jesus! Mirror of Truth, symbol of unity, link of Charity, remember the multitude of wounds with which Thou was covered from head to foot, torn and reddened by the spilling of Thy adorable Blood. O Great and Universal Pain which Thou didst suffer in Thy virginal Flesh for Love of us! Sweetest Jesus! What is there that Thou couldst have done for us which Thou hast not done! May the fruit of Thy sufferings be renewed in my soul by the faithful remembrance of Thy Passion, and may Thy Love increase in my heart each day, until I see Thee in eternity, Thou Who art the treasury of every real good and every joy, which I beg Thee to grant me, O Sweetest Jesus, in Heaven. Amen."]},
+      {title:"Thirteenth Prayer", text:[
+        "O Jesus! Strong Lion, Immortal and Invincible King, remember the pain which Thou didst endure when all Thy strength, both moral and physical, was entirely exhausted, Thou didst bow Thy Head, saying: \"It is consummated!\"",
+        "Through this anguish and grief, I beg of Thee Lord Jesus, to have mercy on me at the hour of my death when my mind will be greatly troubled and my soul will be in anguish. Amen."]},
+      {title:"Fourteenth Prayer", text:[
+        "O Jesus! Only Son of the Father, Splendor and figure of His Substance, remember the simple and humble recommendation Thou didst make of Thy Soul to Thy Eternal Father, saying: \"Father, into Thy Hands I commend My Spirit!\" And with Thy Body all torn, and Thy Heart Broken, and the bowels of Thy Mercy open to redeem us, Thou didst Expire. By this Precious Death, I beg of Thee O King of Saints, comfort me and help me to resist the devil, the flesh and the world, so that being dead to the world I may live for Thee alone. I beg of Thee at the hour of my death to receive me, a pilgrim and an exile returning to Thee. Amen."]},
+      {title:"Fifteenth Prayer", text:[
+        "O Jesus! True and fruitful Vine! Remember the abundant outpouring of Blood which Thou didst so generously shed from Thy Sacred Body as juice from grapes in a wine press.",
+        "From Thy Side, pierced with a lance by a soldier, blood and water issued forth until there was not left in Thy Body a single drop, and finally, like a bundle of myrrh lifted to the top of the Cross Thy delicate Flesh was destroyed, the very Substance of Thy Body withered, and the Marrow of Thy Bones dried up.",
+        "Through this bitter Passion and through the outpouring of Thy Precious Blood, I beg of Thee, O Sweet Jesus, to receive my soul when I am in my death agony. Amen."]}
+    ],
+    closingTitle: "Conclusion",
+    closing: [
+      "O Sweet Jesus! Pierce my heart so that my tears of penitence and love will be my bread day and night; may I be converted entirely to Thee, may my heart be Thy perpetual habitation, may my conversation be pleasing to Thee, and may the end of my life be so praiseworthy that I may merit Heaven and there with Thy saints, praise Thee forever."
+    ],
+    promisesTitle: "Promises",
+    promisesIntro: "Our Lord made the following promises to anyone who recited the 15 St. Bridget Prayers for a whole year:",
+    promises: [
+      "I will deliver 15 souls of his lineage from Purgatory.",
+      "15 souls of his lineage will be confirmed and preserved in grace.",
+      "15 sinners of his lineage will be converted.",
+      "Whoever recites these Prayers will attain in the first degree of perfection.",
+      "15 days before his death I will give him My Precious Body in order that he may escape eternal starvation; I will give him My Precious Blood to drink lest he thirst eternally.",
+      "15 days before his death he will feel a deep contrition for all his sins and will have a perfect knowledge of them.",
+      "I will place before him the sign of My Victorious Cross for his help and defense against the attacks of his enemies.",
+      "Before his death I shall come with My Dearest Beloved Mother.",
+      "I shall graciously receive his soul, and will lead it into eternal joys.",
+      "And having led it there I shall give him a special draught from the fountain of My Deity, something I will not for those who have not recited My Prayers.",
+      "Let it be known that whoever may have been living in the state of mortal sin for 30 years, but who will recite devoutly, or have the intention to recite these Prayers, the Lord will forgive him all his sins.",
+      "I shall protect him from strong temptations.",
+      "I shall preserve and guard his 5 senses.",
+      "I shall preserve him from a sudden death.",
+      "His soul will be delivered from eternal death.",
+      "He will obtain all he asks for from God and the Blessed Virgin.",
+      "If he has lived all his life doing his own will and he is to die the next day, his life will be prolonged.",
+      "Every time one recites these Prayers he gains 100 days indulgence.",
+      "He is assured of being joined to the supreme Choir of Angels.",
+      "Whoever teaches these Prayers to another, will have continuous joy and merit which will endure eternally.",
+      "There where these prayer are being said or will be said in the future God is present with His grace."
+    ],
+    promisesNote: null
+  },
+
+  // ---------- Devotion for twelve years: 7 prayers ----------
+  twelve: {
+    sheetTitle: "7 Prayers of Saint Bridget",
+    introTitle: "Seven prayers for 12 Years",
+    intro: [
+      "Prayers Honoring the 7 Times Jesus Spilled His Precious Blood for Us, as Revealed by Our Lady to St. Bridget, and Approved by Pope Clement XII"
+    ],
+    openingTitle: "Opening prayer",
+    opening: [
+      "O Jesus, now I wish to pray the Lord's Prayer seven times in unity with the love with which You sanctified this prayer in Your Heart. Take it from my lips into Your Divine Heart. Improve and complete it so much that it brings as much honor and joy to the Trinity as You granted it on earth with this prayer. May these pour upon Your Holy Humanity in Glorification to Your Painful Wounds and the Precious Blood that You spilled from them."
+    ],
+    rubric: "Pray 1 Our Father, 1 Hail Mary, then:",
+    prayers: [
+      {title:"First Prayer - The Circumcision", text:[
+        "Eternal Father, through Mary's unblemished hands and the Divine Heart of Jesus, I offer You the first wounds, the first pains, and the first Bloodshed as atonement for my and all of humanity's sins of youth, as protection against the first mortal sin, especially among my relatives. Amen"]},
+      {title:"Second Prayer - The Suffering on the Mount of Olives", text:[
+        "Eternal Father, through Mary's unblemished hands and the Divine Heart of Jesus, I offer You the terrifying suffering of Jesus' Heart on the Mount of Olives and every drop of His Bloody Sweat as atonement for my and all of humanity's sins of the heart, as protection against such sins and for the spreading of Divine and brotherly Love. Amen"]},
+      {title:"Third Prayer - The Flogging", text:[
+        "Eternal Father, through Mary's unblemished hands and the Divine Heart of Jesus, I offer You the many thousands of Wounds, the gruesome Pains, and the Precious Blood of the Flogging as atonement for my and all of humanity's sins of the Flesh, as protection against such sins and the preservation of innocence, especially among my relatives. Amen"]},
+      {title:"Fourth Prayer - The Crowning of Thorns", text:[
+        "Eternal Father, through Mary's unblemished hands and the Divine Heart of Jesus, I offer You the Wounds, the Pains, and the Precious Blood of Jesus' Holy Head from the Crowning with Thorns as atonement for my and all of humanity's sins of the Spirit, as protection against such sins and the spreading of Christ's kingdom here on earth. Amen"]},
+      {title:"Fifth Prayer - The Carrying of the Cross", text:[
+        "Eternal Father, through Mary's unblemished hands and the Divine Heart of Jesus, I offer You the Sufferings on the way of the Cross, especially His Holy Wound on His Shoulder and its Precious Blood as atonement for my and all of humanity's rebellion against the Cross, every grumbling against Your Holy Arrangements and all other sins of the tongue, as protection against such sins and for true love of the Cross. Amen"]},
+      {title:"Sixth Prayer - The Crucifixion", text:[
+        "Eternal Father, through Mary's unblemished hands and the Divine Heart of Jesus, I offer You Your Son on the Cross, His Nailing and Raising, His Wounds on the Hands and Feet and the three streams of His Precious Blood that poured forth from these for us, His extreme tortures of the Body and Soul, His precious Death and its non bleeding Renewal in all Holy Masses on earth as atonement for all wounds against vows and regulations within the Orders, as reparation for my and all of the world's sins, for the sick and the dying, for all holy priests and laymen, for the Holy Father's intentions toward the restoration of Christian families, for the strengthening of Faith, for our country and unity among all nations in Christ and His Church, as well as for the Diaspora. Amen"]},
+      {title:"Seventh Prayer - The Piercing of Jesus' Side", text:[
+        "Eternal Father, accept as worthy, for the needs of the Holy Church and as atonement for the sins of all Mankind, the Precious Blood and Water which poured forth from the Wound of Jesus' Divine Heart. Be gracious and merciful toward us.",
+        "Blood of Christ, the last precious content of His Holy Heart, wash me of all my and others' guilt of sin!",
+        "Water from the Side of Christ, wash me clean of all punishments for sin and extinguish the flames of Purgatory for me and for all the Poor Souls. Amen"]}
+    ],
+    closingTitle: null,
+    closing: null,
+    promisesTitle: "The Magnificent Promises of the 12 Years Prayers",
+    promisesIntro: null,
+    promises: [
+      "The soul who prays them will suffer no Purgatory.",
+      "The soul who prays them will be accepted among the Martyrs as though he had spilled his blood for his faith.",
+      "The soul who prays them can choose three others whom Jesus will then keep in a state of grace sufficient to become holy.",
+      "No one in the four successive generations of the soul who prays them will be lost.",
+      "The soul who prays them will be made conscious of his death one month in advance."
+    ],
+    promisesNote: "If the soul praying these prayers dies before the entire 12 years of prayers have been completed, the Lord will accept them as having been prayed in their entirety, because the intention of the soul was to complete them as directed. If a day or a few days are missed due to a valid reason, they can be made up for later, at the soul's earliest opportunity."
+  }
+};
+
+// ===== Latin texts (shown when the prayer sheet is switched to Latin) =====
+// Pater Noster and Ave Maria are the traditional Latin texts, and so are the words of Our Lord
+// quoted from the Gospels (Vulgate). Everything else is a Latin rendering of the English above.
+const PRAYERS_LA = {
+  ourFather: "Pater noster, qui es in caelis, sanctificetur nomen tuum. Adveniat regnum tuum. Fiat voluntas tua, sicut in caelo et in terra. Panem nostrum quotidianum da nobis hodie, et dimitte nobis debita nostra, sicut et nos dimittimus debitoribus nostris. Et ne nos inducas in tentationem, sed libera nos a malo. Amen.",
+  hailMary: "Ave Maria, gratia plena, Dominus tecum. Benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus. Sancta Maria, Mater Dei, ora pro nobis peccatoribus, nunc et in hora mortis nostrae. Amen.",
+  one: {
+    sheetTitle: "Quindecim Orationes Sanctae Birgittae",
+    introTitle: "Sancta Birgitta et quinque milia quadringenti septuaginta quinque ictus",
+    intro: [
+      "Sancta Birgitta diu oravit ut sciret quot ictus Dominus noster in terribili sua Passione passus esset. Patientiam eius remunerans, quadam die ei apparuit et dixit:",
+      "«Quinque milia quadringentos septuaginta quinque ictus in Corpore meo accepi. Si eos aliquo modo honorare vis, recita quindecim Pater Noster et quindecim Ave Maria cum orationibus sequentibus, quas ipse te docebo, per annum integrum. Anno expleto, singula Vulnera mea honoraveris.»"
+    ],
+    opening: null,
+    rubric: "Pater Noster – Ave Maria",
+    prayers: [
+      {title:"Prima Oratio", text:[
+        "O Iesu Christe, aeterna dulcedo te amantium, iubilus excedens omne gaudium et omne desiderium, salus et spes omnium peccatorum, qui testatus es nullum tibi maius esse desiderium quam esse inter homines, etiam naturam humanam in plenitudine temporis propter amorem hominum assumens, recordare omnium dolorum quos ab instanti conceptionis tuae, et praesertim in Passione tua, pertulisti, sicut ab aeterno in consilio divino decretum et ordinatum erat.",
+        "Memento, Domine, quod in Cena cum discipulis tuis, pedibus eorum lotis, sacratissimum Corpus et Sanguinem tuum eis dedisti, et dum eos dulciter consolabaris, futuram Passionem tuam eis praedixisti.",
+        "Memento tristitiae et amaritudinis quam in anima tua expertus es, sicut ipse testatus es dicens: «Tristis est anima mea usque ad mortem.»",
+        "Memento omnis timoris, angustiae et doloris quos in delicato Corpore tuo ante tormentum crucifixionis passus es, quando, postquam ter orasti, sudore sanguineo perfusus, a Iuda discipulo tuo traditus es, a populo gentis quam elegeras et exaltaveras comprehensus, a falsis testibus accusatus, a tribus iudicibus iniuste iudicatus in flore iuventutis tuae et tempore sollemni Paschali.",
+        "Memento quod vestimentis tuis spoliatus es et veste derisionis indutus; quod Facies et Oculi tui velati sunt, quod colaphis caesus es, spinis coronatus, arundine in Manibus tuis posita, quod ictibus contritus et opprobriis atque contumeliis obrutus es.",
+        "In memoriam omnium horum dolorum et passionum quas ante Passionem tuam in Cruce sustinuisti, concede mihi ante mortem meam veram contritionem, sinceram et integram confessionem, dignam satisfactionem et omnium peccatorum meorum remissionem. Amen."]},
+      {title:"Secunda Oratio", text:[
+        "O Iesu, vera libertas angelorum, paradisus deliciarum, memento horroris et tristitiae quam sustinuisti quando inimici tui, sicut leones furentes, te circumdederunt, et milibus iniuriarum, sputorum, alaparum, lacerationum aliarumque inauditarum crudelitatum ad libitum te cruciaverunt. Intuitu horum tormentorum et verborum contumeliosorum, obsecro te, o Salvator meus, ut me ab omnibus inimicis meis, visibilibus et invisibilibus, liberes et sub protectione tua ad perfectionem salutis aeternae perducas. Amen."]},
+      {title:"Tertia Oratio", text:[
+        "O Iesu, Creator caeli et terrae, quem nulla res comprehendere aut terminare potest, qui omnia amabili potestate tua complecteris et contines, memento acerbissimi doloris quem passus es quando Iudaei sacras Manus et Pedes tuos ad Crucem ictu post ictum magnis et obtusis clavis affixerunt, et te non satis miserabilem ad rabiem suam explendam invenientes, Vulnera tua dilataverunt, dolorem dolori addiderunt, et inenarrabili crudelitate Corpus tuum in Cruce extenderunt, undique traxerunt, et ita Membra tua dissolverunt.",
+        "Obsecro te, o Iesu, per memoriam huius amantissimae passionis Crucis, ut mihi gratiam concedas te timendi et te amandi. Amen."]},
+      {title:"Quarta Oratio", text:[
+        "O Iesu, caelestis medice, in Cruce exaltate ut vulnera nostra tuis sanares, memento livorum quos passus es et debilitatis omnium Membrorum tuorum, quae tantopere distenta sunt ut numquam fuerit dolor similis tuo. A vertice Capitis usque ad plantas Pedum nullus erat locus in Corpore tuo qui non cruciaretur; et tamen, omnium dolorum tuorum oblitus, non cessasti Patrem tuum caelestem pro inimicis tuis orare, dicens: «Pater, dimitte illis, non enim sciunt quid faciunt.»",
+        "Per hanc magnam misericordiam, et in memoriam huius doloris, concede ut recordatio amarissimae Passionis tuae perfectam in nobis contritionem et omnium peccatorum nostrorum remissionem efficiat. Amen."]},
+      {title:"Quinta Oratio", text:[
+        "O Iesu, speculum claritatis aeternae, memento tristitiae quam expertus es quando, in lumine Divinitatis tuae praedestinationem eorum contemplans qui meritis sacrae Passionis tuae salvandi erant, simul vidisti magnam multitudinem reproborum propter peccata sua damnandorum, et de illis desperatis, perditis et infelicibus peccatoribus amare conquestus es.",
+        "Per abyssum compassionis et misericordiae, et praesertim per bonitatem quam bono latroni ostendisti cum ei dixisti: «Hodie mecum eris in paradiso», obsecro te, o dulcis Iesu, ut in hora mortis meae mihi misericordiam praestes. Amen."]},
+      {title:"Sexta Oratio", text:[
+        "O Iesu, rex amabilis et omnino desiderabilis, memento doloris quem passus es quando nudus et sicut vulgaris maleficus Cruci affixus et in ea elevatus es, quando omnes cognati et amici te dereliquerunt, praeter dilectam Matrem tuam, quae in agonia tua tibi proxima mansit, et quam fideli discipulo tuo commendasti cum Mariae dixisti: «Mulier, ecce filius tuus», et sancto Ioanni: «Ecce mater tua.»",
+        "Obsecro te, o Salvator meus, per gladium doloris qui animam sanctae Matris tuae pertransivit, ut mei miserearis in omnibus afflictionibus et tribulationibus meis, tam corporalibus quam spiritualibus, et mihi in omnibus probationibus meis assistas, praesertim in hora mortis meae. Amen."]},
+      {title:"Septima Oratio", text:[
+        "O Iesu, fons inexhauste pietatis, qui profundo amoris affectu de Cruce dixisti: «Sitio», siti salutis generis humani laborasti. Obsecro te, o Salvator meus, ut in cordibus nostris desiderium accendas ad perfectionem in omnibus actibus nostris tendendi, et in nobis concupiscentiam carnis et ardorem desideriorum mundanorum exstinguas. Amen."]},
+      {title:"Octava Oratio", text:[
+        "O Iesu, dulcedo cordium, deliciae spiritus, per amaritudinem aceti et fellis quod in Cruce propter amorem nostri gustasti, concede nobis gratiam pretiosum Corpus et Sanguinem tuum digne suscipiendi in vita nostra et in hora mortis nostrae, ut animabus nostris in remedium et consolationem sint. Amen."]},
+      {title:"Nona Oratio", text:[
+        "O Iesu, regalis virtus, iubilus mentis, recordare doloris quem sustinuisti quando, in mari amaritudinis appropinquante morte demersus, a Iudaeis illusus et contumeliis affectus, voce magna clamasti te a Patre tuo derelictum esse, dicens: «Deus meus, Deus meus, ut quid dereliquisti me?»",
+        "Per hanc angustiam, obsecro te, o Salvator meus, ne me derelinquas in terroribus et doloribus mortis meae. Amen."]},
+      {title:"Decima Oratio", text:[
+        "O Iesu, qui es principium et finis omnium rerum, vita et virtus, memento quod propter nos in abyssum dolorum demersus es, a planta Pedum usque ad verticem Capitis. Intuitu magnitudinis Vulnerum tuorum, doce me per purum amorem mandata tua servare, quorum via lata et facilis est te amantibus. Amen."]},
+      {title:"Undecima Oratio", text:[
+        "O Iesu, profundissima abyssus misericordiae, obsecro te, in memoriam Vulnerum tuorum quae usque ad medullam Ossium tuorum et ad intima tui penetraverunt, ut me miserum peccatorem, offensis meis obrutum, a peccato retrahas et a Facie tua, contra me iuste irata, abscondas; absconde me in Vulneribus tuis, donec ira et iusta indignatio tua pertranseat. Amen."]},
+      {title:"Duodecima Oratio", text:[
+        "O Iesu, speculum veritatis, signum unitatis, vinculum caritatis, memento multitudinis vulnerum quibus a capite usque ad pedes opertus fuisti, laceratus et adorabilis Sanguinis tui effusione rubricatus. O magnum et universalem dolorem quem in virginea carne tua propter amorem nostri passus es! Dulcissime Iesu, quid est quod pro nobis facere potuisti et non fecisti? Renovetur in anima mea fructus passionum tuarum per fidelem recordationem Passionis tuae, et crescat in corde meo amor tuus de die in diem, donec te in aeternitate videam, qui es thesaurus omnis veri boni et omnis gaudii; quod mihi, o dulcissime Iesu, in caelo concedas obsecro. Amen."]},
+      {title:"Tertia Decima Oratio", text:[
+        "O Iesu, leo fortissime, rex immortalis et invictissime, memento doloris quem sustinuisti quando, omnibus viribus tuis tam animi quam corporis penitus exhaustis, inclinato Capite dixisti: «Consummatum est.»",
+        "Per hanc angustiam et dolorem, obsecro te, Domine Iesu, ut mei miserearis in hora mortis meae, quando mens mea valde turbabitur et anima mea angustiabitur. Amen."]},
+      {title:"Quarta Decima Oratio", text:[
+        "O Iesu, unigenite Patris, splendor et figura substantiae eius, memento simplicis et humilis commendationis qua animam tuam Patri aeterno commendasti, dicens: «Pater, in manus tuas commendo spiritum meum.» Et lacerato Corpore tuo, fracto Corde tuo, et visceribus misericordiae tuae ad nos redimendos apertis, exspirasti. Per hanc pretiosam mortem, obsecro te, o rex sanctorum, conforta me et adiuva me ad resistendum diabolo, carni et mundo, ut mundo mortuus tibi soli vivam. Obsecro te ut in hora mortis meae me suscipias, peregrinum et exsulem ad te redeuntem. Amen."]},
+      {title:"Quinta Decima Oratio", text:[
+        "O Iesu, vitis vera et fecunda, memento abundantis effusionis Sanguinis quem tam largiter de sacro Corpore tuo effudisti, sicut sucum uvae in torculari.",
+        "De Latere tuo, a milite lancea perforato, sanguis et aqua exierunt, donec in Corpore tuo ne una quidem gutta remaneret; et denique, sicut fasciculus myrrhae in summitatem Crucis elevatus, delicata Caro tua consumpta est, ipsa Substantia Corporis tui exaruit, et Medulla Ossium tuorum aruit.",
+        "Per hanc amaram Passionem et per effusionem pretiosi Sanguinis tui, obsecro te, o dulcis Iesu, ut animam meam suscipias cum in agonia mortis fuero. Amen."]}
+    ],
+    closingTitle: "Conclusio",
+    closing: [
+      "O dulcis Iesu, vulnera cor meum, ut lacrimae paenitentiae et amoris sint mihi panis die ac nocte; convertar totus ad te, sit cor meum perpetua habitatio tua, sit conversatio mea tibi placita, et finis vitae meae ita laudabilis sit ut caelum merear, ibique cum sanctis tuis te in aeternum laudem."
+    ],
+    promisesTitle: "Promissiones",
+    promisesIntro: "Dominus noster has promissiones fecit cuicumque quindecim Orationes S. Birgittae per annum integrum recitaverit:",
+    promises: [
+      "Quindecim animas de stirpe eius e Purgatorio liberabo.",
+      "Quindecim animae de stirpe eius in gratia confirmabuntur et conservabuntur.",
+      "Quindecim peccatores de stirpe eius convertentur.",
+      "Quicumque has Orationes recitaverit, ad primum gradum perfectionis perveniet.",
+      "Quindecim diebus ante mortem eius dabo ei pretiosum Corpus meum, ut aeternam famem effugiat; dabo ei pretiosum Sanguinem meum bibendum, ne in aeternum sitiat.",
+      "Quindecim diebus ante mortem suam profundam contritionem omnium peccatorum suorum sentiet et perfectam eorum cognitionem habebit.",
+      "Ponam ante eum signum victricis Crucis meae in auxilium et defensionem contra impetus inimicorum eius.",
+      "Ante mortem eius veniam cum carissima et dilecta Matre mea.",
+      "Animam eius benigne suscipiam et in gaudia aeterna perducam.",
+      "Et cum eam illuc perduxero, dabo ei singularem haustum e fonte Deitatis meae, quod non faciam iis qui Orationes meas non recitaverint.",
+      "Sciatur quod quicumque per triginta annos in statu peccati mortalis vixerit, sed has Orationes devote recitaverit aut recitandi intentionem habuerit, Dominus ei omnia peccata eius dimittet.",
+      "Protegam eum a gravibus tentationibus.",
+      "Quinque sensus eius conservabo et custodiam.",
+      "Praeservabo eum a morte subitanea.",
+      "Anima eius a morte aeterna liberabitur.",
+      "Omnia quae a Deo et a Beata Virgine petierit, obtinebit.",
+      "Si per totam vitam suam secundum propriam voluntatem vixerit et postridie moriturus sit, vita eius prolongabitur.",
+      "Quotiescumque has Orationes recitaverit, centum dierum indulgentiam lucratur.",
+      "Certus est se supremo Angelorum choro adiungendum esse.",
+      "Quicumque has Orationes alium docuerit, continuum gaudium et meritum habebit, quod in aeternum permanebit.",
+      "Ubi hae orationes dicuntur aut in futurum dicentur, ibi Deus cum gratia sua adest."
+    ],
+    promisesNote: null
+  },
+  twelve: {
+    sheetTitle: "Septem Orationes Sanctae Birgittae",
+    introTitle: "Septem orationes per duodecim annos",
+    intro: [
+      "Orationes in honorem septem vicium quibus Iesus pretiosum Sanguinem suum pro nobis effudit, a Beata Virgine Sanctae Birgittae revelatae et a Clemente Papa XII approbatae."
+    ],
+    openingTitle: "Oratio initialis",
+    opening: [
+      "O Iesu, nunc volo Orationem Dominicam septies orare in unione cum amore quo hanc orationem in Corde tuo sanctificasti. Accipe eam de labiis meis in divinum Cor tuum. Emenda et perfice eam tantopere, ut tantum honoris et gaudii Trinitati afferat quantum tu ei hac oratione in terra tribuisti. Effundantur haec super sanctam Humanitatem tuam in glorificationem dolorosorum Vulnerum tuorum et pretiosi Sanguinis quem ex eis effudisti."
+    ],
+    rubric: "Ora semel Pater Noster, semel Ave Maria, deinde:",
+    prayers: [
+      {title:"Prima Oratio – Circumcisio", text:[
+        "Pater aeterne, per immaculatas manus Mariae et divinum Cor Iesu, offero tibi prima vulnera, primos dolores et primam Sanguinis effusionem in expiationem peccatorum iuventutis meae et totius generis humani, in praesidium contra primum peccatum mortale, praesertim inter cognatos meos. Amen."]},
+      {title:"Secunda Oratio – Agonia in Monte Oliveti", text:[
+        "Pater aeterne, per immaculatas manus Mariae et divinum Cor Iesu, offero tibi terribilem passionem Cordis Iesu in Monte Oliveti et singulas guttas sanguinei sudoris eius in expiationem peccatorum cordis mei et totius generis humani, in praesidium contra talia peccata et ad divinum fraternumque amorem propagandum. Amen."]},
+      {title:"Tertia Oratio – Flagellatio", text:[
+        "Pater aeterne, per immaculatas manus Mariae et divinum Cor Iesu, offero tibi multa milia Vulnerum, atroces Dolores et pretiosum Sanguinem Flagellationis in expiationem peccatorum carnis meae et totius generis humani, in praesidium contra talia peccata et ad innocentiam conservandam, praesertim inter cognatos meos. Amen."]},
+      {title:"Quarta Oratio – Coronatio Spinis", text:[
+        "Pater aeterne, per immaculatas manus Mariae et divinum Cor Iesu, offero tibi Vulnera, Dolores et pretiosum Sanguinem sacri Capitis Iesu ex Coronatione spinea in expiationem peccatorum spiritus mei et totius generis humani, in praesidium contra talia peccata et ad regnum Christi hic in terra propagandum. Amen."]},
+      {title:"Quinta Oratio – Baiulatio Crucis", text:[
+        "Pater aeterne, per immaculatas manus Mariae et divinum Cor Iesu, offero tibi Passiones in via Crucis, praesertim sanctum Vulnus Umeri eius eiusque pretiosum Sanguinem, in expiationem rebellionis meae et totius generis humani contra Crucem, omnis murmurationis contra sanctas dispositiones tuas omniumque aliorum peccatorum linguae, in praesidium contra talia peccata et ad verum Crucis amorem. Amen."]},
+      {title:"Sexta Oratio – Crucifixio", text:[
+        "Pater aeterne, per immaculatas manus Mariae et divinum Cor Iesu, offero tibi Filium tuum in Cruce, eius Clavorum affixionem et Elevationem, eius Vulnera in Manibus et Pedibus et tres rivos pretiosi Sanguinis eius qui ex his pro nobis profluxerunt, eius extrema corporis et animae tormenta, pretiosam eius Mortem eiusque incruentam renovationem in omnibus sanctis Missis in terra, in expiationem omnium vulnerum contra vota et regulas in Ordinibus religiosis, in reparationem peccatorum meorum et totius mundi, pro infirmis et morientibus, pro omnibus sanctis sacerdotibus et laicis, pro intentionibus Summi Pontificis ad restaurationem familiarum christianarum, ad fidem roborandam, pro patria nostra et unitate omnium gentium in Christo eiusque Ecclesia, necnon pro Diaspora. Amen."]},
+      {title:"Septima Oratio – Apertio Lateris Iesu", text:[
+        "Pater aeterne, accipe ut dignum, pro necessitatibus sanctae Ecclesiae et in expiationem peccatorum totius generis humani, pretiosum Sanguinem et Aquam quae ex Vulnere divini Cordis Iesu profluxerunt. Esto nobis propitius et misericors.",
+        "Sanguis Christi, ultimum pretiosum sacri Cordis eius contentum, ablue me ab omni culpa peccati mei et aliorum!",
+        "Aqua lateris Christi, munda me ab omnibus poenis peccati et exstingue flammas Purgatorii mihi et omnibus animabus in Purgatorio detentis. Amen."]}
+    ],
+    closingTitle: null,
+    closing: null,
+    promisesTitle: "Magnificae promissiones orationum duodecim annorum",
+    promisesIntro: null,
+    promises: [
+      "Anima quae eas oraverit nullum Purgatorium patietur.",
+      "Anima quae eas oraverit inter Martyres recipietur, ac si sanguinem suum pro fide effudisset.",
+      "Anima quae eas oraverit tres alios eligere potest, quos Iesus deinde in statu gratiae conservabit, ut sancti fieri possint.",
+      "Nemo in quattuor generationibus subsequentibus animae quae eas oraverit peribit.",
+      "Anima quae eas oraverit mortis suae uno mense ante conscia fiet."
+    ],
+    promisesNote: "Si anima has orationes orans moriatur antequam integri duodecim anni orationum expleti sint, Dominus eas accipiet ac si integre oratae essent, quia intentio animae erat eas ut praescriptum est perficere. Si dies unus aut pauci ob iustam causam omissi sint, postea suppleri possunt, prima animae opportunitate."
+  }
+};
+
+// Where the prayers come from (link at the bottom of the prayer sheet).
+const SOURCE_URL = {one:"https://www.theworkofgod.org/Devotns/bridget.htm", twelve:"https://www.theworkofgod.org/Devotns/bridget_12years.htm"};
+/* ===================== end of editable section ===================== */
+
+const KINDS={
+  one:{years:1,perDay:15,label:"One year",eyebrow:"Fifteen prayers · One year",newBtn:"Start a New Year",chip:"1 year"},
+  twelve:{years:12,perDay:7,label:"Twelve years",eyebrow:"Seven prayers · Twelve years",newBtn:"Begin 12 Years",chip:"12 years"}
+};
+const YEAR_DAYS=365;
+const LS_KEY="stbridget-data", THEME_KEY="stbridget-theme";
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const uidGen=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const nf=n=>n.toLocaleString();
+
+function blankState(){return {commitments:[],current:{one:null,twelve:null},defaultKind:"one",journal:[],updatedAt:0}}
+let state=blankState();
+try{const raw=localStorage.getItem(LS_KEY);if(raw){const s=JSON.parse(raw);if(s&&Array.isArray(s.commitments))state=Object.assign(blankState(),s);}}catch(e){}
+if(!state.current)state.current={one:null,twelve:null};
+let kind=state.defaultKind==="twelve"?"twelve":"one";
+
+function save(){state.updatedAt=Date.now();try{localStorage.setItem(LS_KEY,JSON.stringify(state))}catch(e){}}
+function current(){return state.commitments.find(c=>c.id===state.current[kind])||null}
+const DAY=86400000;
+function midnight(d){const x=new Date(d);return new Date(x.getFullYear(),x.getMonth(),x.getDate())}
+function base(c){return midnight(c.start)}
+function dateOf(c,i){const b=base(c);return new Date(b.getFullYear(),b.getMonth(),b.getDate()+i,12)}
+function idxOfDate(c,d){return Math.round((midnight(d)-base(c))/DAY)}
+function todayIdx(c){return idxOfDate(c,new Date())}
+function total(c){return KINDS[c.kind].years*YEAR_DAYS}
+function count(c){return Object.keys(c.prayed||{}).length}
+function yearCount(c,y){let n=0;for(const k in c.prayed){const i=+k;if(i>=y*YEAR_DAYS&&i<(y+1)*YEAR_DAYS)n++}return n}
+function prayedToday(c){const t=midnight(new Date()).getTime();return Object.values(c.prayed).some(iso=>midnight(iso).getTime()===t)}
+function missedList(c){const t=Math.min(todayIdx(c),total(c));const out=[];for(let i=0;i<t;i++)if(!c.prayed[i])out.push(i);return out}
+function streak(c){let t=Math.min(todayIdx(c),total(c)-1);let i=c.prayed[t]?t:t-1,s=0;while(i>=0&&c.prayed[i]){s++;i--}return s}
+function projected(c){const rem=total(c)-count(c);if(rem<=0)return null;const d=midnight(new Date());d.setDate(d.getDate()+(prayedToday(c)?rem:rem-1));return d}
+const fmtDate=d=>new Date(d).toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric",year:"numeric"});
+const fmtShort=d=>new Date(d).toLocaleDateString(undefined,{month:"short",day:"numeric"});
+const fmtShortY=d=>new Date(d).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"});
+const fmtTime=d=>new Date(d).toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"});
+function addMonthsClamp(d,m){const y=d.getFullYear(),mo=d.getMonth()+m,day=d.getDate();const last=new Date(y,mo+1,0).getDate();return new Date(y,mo,Math.min(day,last),12)}
+// Months of commitment year y: [{from,to(exclusive)}], index ranges; 12 per year
+function monthsOf(c,y){
+  const ys=dateOf(c,y*YEAR_DAYS),lo=y*YEAR_DAYS,hi=(y+1)*YEAR_DAYS,out=[];
+  for(let m=0;m<12;m++){
+    let a=lo+idxOfDate(c,addMonthsClamp(ys,m))-idxOfDate(c,ys),b=m===11?hi:lo+idxOfDate(c,addMonthsClamp(ys,m+1))-idxOfDate(c,ys);
+    a=Math.min(Math.max(a,lo),hi);b=Math.min(Math.max(b,lo),hi);out.push({from:a,to:b});
+  }
+  return out;
+}
+function locate(c,i){i=Math.max(0,Math.min(i,total(c)-1));const y=Math.floor(i/YEAR_DAYS);const ms=monthsOf(c,y);const m=Math.max(0,ms.findIndex(r=>i>=r.from&&i<r.to));return{y,m}}
+
+/* ---------- view selection ---------- */
+let view={cid:null,y:0,m:0};
+function syncView(){const c=current();if(!c){view={cid:null,y:0,m:0};return}if(view.cid!==c.id){const L=locate(c,todayIdx(c));view={cid:c.id,y:L.y,m:L.m}}}
+
+/* ---------- crown of thorns ---------- */
+const CX=180,CY=180,R=148;
+const STAR="0.00,-7.50 1.88,-2.59 7.13,-2.32 3.04,0.99 4.41,6.07 0.00,3.20 -4.41,6.07 -3.04,0.99 -7.13,-2.32 -1.88,-2.59";
+function wreathPaths(){
+  let a="",b="",sp="";const N=360;
+  for(let k=0;k<=N;k++){const t=k/N*2*Math.PI;const ra=R+3.2*Math.sin(t*18),rb=R-3.2*Math.sin(t*18+.6);
+    a+=(k?"L":"M")+(CX+ra*Math.cos(t)).toFixed(1)+","+(CY+ra*Math.sin(t)).toFixed(1);
+    b+=(k?"L":"M")+(CX+rb*Math.cos(t)).toFixed(1)+","+(CY+rb*Math.sin(t)).toFixed(1);}
+  for(let k=0;k<36;k++){const t=(k+.5)/36*2*Math.PI,out=k%2?1:-1;const r0=R+out*4,r1=R+out*12;
+    const p=(r,dt)=>`${(CX+r*Math.cos(t+dt)).toFixed(1)},${(CY+r*Math.sin(t+dt)).toFixed(1)}`;
+    sp+=`<path class="spike" d="M${p(r0,-.02)} L${p(r1,.012)} L${p(r0,.03)}Z"/>`;}
+  return `<g aria-hidden="true"><path class="thorn-a" d="${a}"/><path class="thorn-b" d="${b}"/>${sp}</g>`;
+}
+const WREATH=wreathPaths();
+function drawCrown(){
+  const c=current(),svg=$("crown");
+  const cross=`<g aria-hidden="true" transform="translate(${CX},${CY-74})"><path class="cross-gold" d="M-3,-17h6v10h10v6h-10v20h-6v-20h-10v-6h10z"/></g>`;
+  if(!c){
+    let s=WREATH+cross;
+    for(let k=0;k<30;k++){const a=(-90+k*12)*Math.PI/180;s+=`<circle cx="${(CX+R*Math.cos(a)).toFixed(1)}" cy="${(CY+R*Math.sin(a)).toFixed(1)}" r="8" fill="var(--bead)" stroke="var(--bead-edge)" stroke-width="1.2" opacity=".7"/>`}
+    const k=KINDS[kind];
+    s+=`<text class="c-small" x="${CX}" y="${CY-28}">${kind==="one"?"365 days":"12 years"}</text><text class="c-big" x="${CX}" y="${CY+14}">${kind==="one"?"1":"12"}</text><text class="c-cap" x="${CX}" y="${CY+42}">${kind==="one"?"year of prayer":"years of prayer"}</text><text class="c-cap" x="${CX}" y="${CY+64}" style="fill:var(--muted)">Tap to begin</text>`;
+    svg.innerHTML=s;svg.setAttribute("aria-label","No devotion begun yet");return;
+  }
+  const t=todayIdx(c),ms=monthsOf(c,view.y),mo=ms[view.m],n=mo.to-mo.from;
+  let done=0;for(let i=mo.from;i<mo.to;i++)if(c.prayed[i])done++;
+  const tot=total(c),cnt=count(c);
+  let s=WREATH+cross;
+  const step=360/n,br=n>29?9:10;
+  for(let k=0;k<n;k++){
+    const i=mo.from+k,a=(-90+k*step)*Math.PI/180,x=CX+R*Math.cos(a),y=CY+R*Math.sin(a);
+    const p=c.prayed[i],made=c.madeUp&&c.madeUp[i],refl=reflOf(c,i);
+    const st=p?"done":i===t?"today":i<t?"missed":"future";
+    const cls=["bead",st,p&&i===t?"today":"",made?"made":""].join(" ");
+    const d=dateOf(c,i);
+    const lbl=`Day ${i+1}, ${fmtDate(d)}: `+(p?`prayed${made?", made up":""}${refl?", has a reflection":""}`:i===t?"today, tap to mark prayed":i<t?"missed, tap to mark made up":"still ahead");
+    s+=`<g class="${cls}" data-i="${i}" transform="translate(${x.toFixed(1)},${y.toFixed(1)})" tabindex="0" role="button" aria-label="${lbl}"><circle class="hit" r="16"/><circle class="ring" r="${br+5}"/><g class="gl"><circle class="b" r="${br}"/><path class="drop" d="M0,-4.6 C2.6,-1.2 3.2,.6 3.2,1.6 A3.2,3.2 0 0 1 -3.2,1.6 C-3.2,.6 -2.6,-1.2 0,-4.6Z"/></g>${refl?`<polygon class="refl-star" transform="translate(${(Math.cos(a)*15).toFixed(1)},${(Math.sin(a)*15).toFixed(1)}) scale(.95)" points="${STAR}"/>`:""}</g>`;
+    const nx=CX+(R-24)*Math.cos(a),ny=CY+(R-24)*Math.sin(a);
+    s+=`<text class="dnum${i===t?" today":""}" x="${nx.toFixed(1)}" y="${ny.toFixed(1)}" aria-hidden="true">${d.getDate()}</text>`;
+  }
+  const first=dateOf(c,mo.from),last=dateOf(c,mo.to-1);
+  const yl=c.kind==="twelve"?`Year ${view.y+1} · `:"";
+  s+=`<text class="c-small" x="${CX}" y="${CY-30}">${yl}Month ${view.m+1} of 12</text>`;
+  s+=`<text class="c-big" x="${CX}" y="${CY+12}">${done} / ${n}</text>`;
+  s+=`<text class="c-cap" x="${CX}" y="${CY+38}">${fmtShort(first)} – ${fmtShort(last)}</text>`;
+  const cap=cnt>=tot?"Deo gratias":t>=tot?"Make up the days that remain":c.prayed[t]?"Today is prayed. God bless you.":t<mo.from||t>=mo.to?"Tap a month below for today":"Tap today’s bead when prayed";
+  s+=`<text class="c-cap" x="${CX}" y="${CY+62}" style="fill:var(--muted);font-size:13.5px">${cap}</text>`;
+  svg.innerHTML=s;svg.setAttribute("aria-label",`${yl}month ${view.m+1} of 12: ${done} of ${n} days prayed`);
+}
+function ringSvg(frac,cur){const r=14,C=2*Math.PI*r;return `<svg viewBox="0 0 36 36" aria-hidden="true"><circle class="mr-bg" cx="18" cy="18" r="${r}"/>${frac>0?`<circle class="mr-fg" cx="18" cy="18" r="${r}" stroke-dasharray="${(C*frac).toFixed(2)} ${C.toFixed(2)}"/>`:""}${cur?`<circle class="mr-dot" cx="18" cy="18" r="3.2"/>`:""}</svg>`}
+function drawNav(){
+  const c=current(),mEl=$("months"),yEl=$("years");
+  if(!c){mEl.innerHTML="";yEl.hidden=true;return}
+  const t=todayIdx(c);
+  if(c.kind==="twelve"){
+    yEl.hidden=false;const ty=Math.floor(Math.min(Math.max(t,0),total(c)-1)/YEAR_DAYS);
+    yEl.innerHTML=Array.from({length:12},(_,y)=>{const f=yearCount(c,y)/YEAR_DAYS;return `<button role="tab" data-y="${y}" class="${y===view.y?"sel":""} ${y===ty?"cur":""}" aria-selected="${y===view.y}" aria-label="Year ${y+1}, ${Math.round(f*100)}% prayed${y===ty?", current year":""}">Yr ${y+1}<i><b style="width:${(f*100).toFixed(1)}%"></b></i></button>`}).join("");
+  }else yEl.hidden=true;
+  const ms=monthsOf(c,view.y);
+  mEl.innerHTML=ms.map((r,m)=>{let d=0;for(let i=r.from;i<r.to;i++)if(c.prayed[i])d++;const cur=t>=r.from&&t<r.to;const lab=dateOf(c,r.from).toLocaleDateString(undefined,{month:"short"});
+    return `<button role="tab" data-m="${m}" class="${m===view.m?"sel":""} ${cur?"cur":""}" aria-selected="${m===view.m}" aria-label="Month ${m+1}, starting ${fmtShort(dateOf(c,r.from))}: ${d} of ${r.to-r.from} prayed${cur?", this month":""}">${ringSvg(d/(r.to-r.from),cur)}${lab}</button>`}).join("");
+}
+$("months").addEventListener("click",e=>{const b=e.target.closest("[data-m]");if(!b)return;view.m=+b.dataset.m;drawCrown();drawNav()});
+$("years").addEventListener("click",e=>{const b=e.target.closest("[data-y]");if(!b)return;view.y=+b.dataset.y;const c=current(),t=todayIdx(c);const L=locate(c,t);view.m=L.y===view.y?L.m:0;drawCrown();drawNav()});
+
+/* ---------- stats ---------- */
+function drawStats(){
+  const c=current(),el=$("stats");
+  if(!c){const tot=KINDS[kind].years*YEAR_DAYS,per=KINDS[kind].perDay;
+    el.innerHTML=`<div class="stat"><span class="label">Days</span><b>${nf(tot)}</b></div><div class="stat"><span class="label">Each day</span><b>${per} <small>prayers</small></b></div><div class="stat wide"><span class="label">Our Fathers &amp; Hail Marys</span><b>${nf(tot*per)} <small>of each</small></b></div>`;return}
+  const tot=total(c),cnt=count(c),per=KINDS[c.kind].perDay,pr=projected(c),st=streak(c);
+  const pct=(cnt/tot*100).toFixed(1);
+  el.innerHTML=`<div class="stat"><span class="label">Days prayed</span><b>${nf(cnt)} <small>/ ${nf(tot)}</small></b><div class="bar"><i style="width:${pct}%"></i></div></div>
+    <div class="stat"><span class="label">Current streak</span><b>${st} <small>${st===1?"day":"days"}</small></b></div>
+    <div class="stat"><span class="label">${pr?"Projected finish":"Finished"}</span><b style="font-size:19px">${pr?fmtShortY(pr):fmtShortY(c.completedAt||new Date())}</b></div>
+    <div class="stat"><span class="label">${c.kind==="twelve"?"This year":"Missed so far"}</span><b>${c.kind==="twelve"?`${yearCount(c,locate(c,todayIdx(c)).y)} <small>/ 365</small>`:`${missedList(c).length} <small>days</small>`}</b></div>
+    <div class="stat wide"><span class="label">Our Fathers &amp; Hail Marys prayed</span><b>${nf(cnt*per)} <small>of each, toward ${nf(tot*per)}</small></b><div class="bar"><i style="width:${pct}%"></i></div></div>`;
+}
+
+/* ---------- intention card ---------- */
+let editing=false;
+function drawIntent(){
+  const c=current(),el=$("intentCard");
+  if(!c){el.innerHTML=`<span class="label">Your intention</span><p class="intent-text empty">${kind==="one"?"Begin your year of prayer and write the intention you are bringing to Our Lord.":"Begin your twelve years of prayer and write the intention you are bringing to Our Lord."}</p>`;return}
+  const done=count(c)>=total(c);
+  const status=done?`Began ${fmtShortY(c.start)} · Completed ${fmtShortY(c.completedAt)}`:`Began ${fmtDate(c.start)}`;
+  if(editing){
+    el.innerHTML=`<label class="label" for="editIntent">Your intention</label><textarea id="editIntent">${esc(c.intention||"")}</textarea>
+      <div class="intent-row"><span class="meta">${status}</span><span><button class="link-btn" id="editCancel">Cancel</button> <button class="link-btn" id="editSave">Save</button></span></div>`;
+    $("editIntent").focus();
+    $("editCancel").onclick=()=>{editing=false;drawIntent()};
+    $("editSave").onclick=()=>{c.intention=$("editIntent").value.trim();editing=false;save();render();toast("Intention saved")};
+    return;
+  }
+  el.innerHTML=`<span class="label">Praying for</span>
+    <p class="intent-text${c.intention?"":" empty"}">${c.intention?esc(c.intention):"No intention written yet."}</p>
+    <div class="intent-row"><span class="meta">${status}</span><button class="link-btn" id="editBtn">Edit intention</button></div>`;
+  $("editBtn").onclick=()=>{editing=true;drawIntent()};
+}
+
+/* ---------- missed-days note ---------- */
+function drawNote(){
+  const c=current(),el=$("skipNote");el.hidden=true;if(!c||count(c)>=total(c))return;
+  const t=todayIdx(c),miss=missedList(c),tot=total(c);
+  if(t>=tot){el.textContent=`Your ${c.kind==="one"?"year":"twelve years"} on the calendar has ended with ${miss.length} ${miss.length===1?"day":"days"} still to make up. There is no hurry. Tap any dashed bead to mark it made up as you pray it.`;el.hidden=false;return}
+  if(!miss.length)return;
+  const lastMiss=miss[miss.length-1];
+  const lead=lastMiss===t-1&&!c.prayed[t]?"Yesterday wasn’t marked.":`${miss.length} ${miss.length===1?"day hasn’t":"days haven’t"} been marked yet.`;
+  el.textContent=`${lead} That’s all right. Simply continue today, and when you make up a missed day, tap its dashed bead to mark it made up.`+(c.kind==="twelve"?" (Missed days may be made up at the earliest opportunity.)":"");
+  el.hidden=false;
+}
+
+/* ---------- history ---------- */
+function drawHistory(){
+  const list=[...state.commitments].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)),h=$("hist");
+  if(!list.length){h.innerHTML=`<li class="empty-hist">Each year of prayer you begin will be listed here, with its intention and dates.</li>`;return}
+  h.innerHTML=list.map(c=>{
+    const cnt=count(c),tot=total(c),complete=cnt>=tot,isCur=c.id===state.current[c.kind]&&c.kind===kind;
+    const end=complete?`Finished ${fmtShortY(c.completedAt)}`:`${nf(cnt)} of ${nf(tot)} days`;
+    const chip=`<span class="chip kind">${KINDS[c.kind].chip}</span>`+(isCur?`<span class="chip">Current</span>`:complete?`<span class="chip done">Complete</span>`:`<span class="chip">In progress</span>`);
+    return `<li class="hist-item"><button class="hist-btn" data-open="${c.id}" aria-label="${isCur?"Showing":complete?"View":"Resume"}: ${esc(c.intention||"no intention written")}"><div class="hist-body">${chip}<p class="hist-intent">${c.intention?esc(c.intention):"<span style='opacity:.6'>No intention written</span>"}</p><div class="minibar"><i style="width:${(cnt/tot*100).toFixed(1)}%"></i></div><div class="meta">Began ${fmtShortY(c.start)} · ${end}</div></div><span class="hist-go">${isCur?"":complete?"View":"Resume"}</span></button></li>`;
+  }).join("");
+}
+$("hist").addEventListener("click",e=>{const b=e.target.closest("[data-open]");if(!b)return;const c=state.commitments.find(x=>x.id===b.dataset.open);if(!c)return;
+  kind=c.kind;state.defaultKind=kind;state.current[kind]=c.id;view.cid=null;editing=false;save();render();window.scrollTo({top:0,behavior:"smooth"})});
+
+/* ---------- devotion switch ---------- */
+function drawKind(){
+  $("eyebrow").textContent=KINDS[kind].eyebrow;
+  [...$("kindSeg").children].forEach(b=>b.setAttribute("aria-pressed",b.dataset.kind===kind));
+  $("newBtn").textContent=KINDS[kind].newBtn;
+}
+$("kindSeg").addEventListener("click",e=>{const b=e.target.closest("[data-kind]");if(!b||b.dataset.kind===kind)return;kind=b.dataset.kind;state.defaultKind=kind;editing=false;save();render()});
+
+function render(){syncView();drawKind();drawIntent();drawCrown();drawNav();drawStats();drawNote();drawHistory();
+  const c=current();$("prayBtn").textContent=c&&count(c)>=total(c)?"The Prayers":"Today’s Prayers";}
+
+/* ---------- marking days ---------- */
+let popupI=null;
+function reflOf(c,i){return c&&c.reflections&&c.reflections[i]&&c.reflections[i].text?c.reflections[i]:null}
+function dayName(c,i){return c.kind==="twelve"?`Day ${nf(i+1)} · Year ${Math.floor(i/YEAR_DAYS)+1}`:`Day ${i+1}`}
+function afterMark(c,i){
+  const tot=total(c);
+  if(count(c)>=tot&&!c.completedAt)c.completedAt=new Date().toISOString();
+  save();render();
+  const g=document.querySelector(`.bead[data-i="${i}"]`);if(g)g.classList.add("just");
+  if(count(c)>=tot){celebrate(c);return true}
+  if(c.kind==="twelve"){const y=Math.floor(i/YEAR_DAYS);if(yearCount(c,y)===YEAR_DAYS){toast(`Year ${y+1} of 12 complete. Thanks be to God.`);petals();return true}}
+  return false;
+}
+function markToday(c){const t=todayIdx(c);if(t<0||t>=total(c)||c.prayed[t])return;c.prayed[t]=new Date().toISOString();
+  const L=locate(c,t);view.y=L.y;view.m=L.m;if(!afterMark(c,t))toast(`${dayName(c,t)} prayed. God bless you.`)}
+function onBead(i){
+  const c=current();if(!c){openNew();return}
+  const t=todayIdx(c);popupI=i;
+  if(c.prayed[i]){
+    $("dayTitle").textContent=`${dayName(c,i)} prayed`;
+    const when=c.prayed[i],made=c.madeUp&&c.madeUp[i];
+    $("dayWhen").textContent=made?`For ${fmtDate(dateOf(c,i))}. Made up ${fmtDate(when)} at ${fmtTime(when)}.`:`${fmtDate(when)} at ${fmtTime(when)}`;
+    $("dayUnmark").textContent="Unmark day";$("reflDel").textContent="Delete";drawDayRefl();show("dayOverlay");return;
+  }
+  if(i===t){markToday(c);return}
+  if(i<t){$("missTitle").textContent=dayName(c,i);$("missWhen").textContent=fmtDate(dateOf(c,i));show("missOverlay");return}
+  toast(`${dayName(c,i)} (${fmtShort(dateOf(c,i))}) is still ahead.`);
+}
+$("crown").addEventListener("click",e=>{const g=e.target.closest(".bead");if(g)onBead(+g.dataset.i);else if(!current())openNew()});
+$("crown").addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.closest(".bead")){e.preventDefault();onBead(+e.target.closest(".bead").dataset.i)}});
+$("missNo").onclick=()=>hide("missOverlay");
+$("missYes").onclick=()=>{const c=current();if(!c)return;c.prayed[popupI]=new Date().toISOString();c.madeUp=c.madeUp||{};c.madeUp[popupI]=true;hide("missOverlay");
+  if(!afterMark(c,popupI))toast(`${dayName(c,popupI)} marked as made up`)};
+$("dayKeep").onclick=()=>hide("dayOverlay");
+$("dayUnmark").onclick=()=>{
+  const b=$("dayUnmark");if(b.textContent==="Unmark day"){b.textContent="Tap again to unmark";return}
+  const c=current();if(c&&popupI!==null){delete c.prayed[popupI];if(c.madeUp)delete c.madeUp[popupI];c.completedAt=null;save();render();toast(`${dayName(c,popupI)} unmarked`)}hide("dayOverlay")};
+function drawDayRefl(){
+  const c=current(),r=reflOf(c,popupI);
+  $("dayRefl").hidden=!r;$("dayReflActs").hidden=!r;$("dayRowRefl").hidden=!!r;if(r)$("dayReflText").textContent=r.text;
+}
+let reflDelArmed=false;
+function openRefl(){
+  const c=current();if(!c||popupI===null)return;const r=reflOf(c,popupI);
+  $("reflTitle").textContent=`${dayName(c,popupI)} reflection`;
+  $("reflMeta").textContent=(c.intention?`Praying for: ${c.intention}`:"")+(r?`${c.intention?" · ":""}Last saved ${fmtShort(r.updatedAt)}`:"");
+  $("reflText").value=r?r.text:"";reflDelArmed=false;$("reflDelete").textContent="Delete reflection";$("reflDelete").hidden=!r;
+  hide("dayOverlay");show("reflOverlay");setTimeout(()=>$("reflText").focus(),50);
+}
+$("dayRefBtn").onclick=openRefl;
+$("reflEdit").onclick=openRefl;
+$("reflView").onclick=()=>{const c=current(),r=reflOf(c,popupI);if(!r)return;$("viewTitle").textContent=`${dayName(c,popupI)} reflection`;$("viewMeta").textContent=`${fmtDate(dateOf(c,popupI))} · Last saved ${fmtShort(r.updatedAt)}`;$("viewText").textContent=r.text;hide("dayOverlay");show("viewOverlay")};
+$("viewClose").onclick=()=>{hide("viewOverlay");drawDayRefl();show("dayOverlay")};
+$("reflDel").onclick=()=>{const b=$("reflDel");if(b.textContent==="Delete"){b.textContent="Tap again to delete";return}
+  b.textContent="Delete";const c=current();if(c&&c.reflections)delete c.reflections[popupI];save();render();drawDayRefl();toast("Reflection deleted")};
+$("reflCancel").onclick=()=>{hide("reflOverlay");drawDayRefl();show("dayOverlay")};
+$("reflSave").onclick=()=>{
+  const c=current();if(!c||popupI===null)return;const t=$("reflText").value.trim();
+  c.reflections=c.reflections||{};if(t)c.reflections[popupI]={text:t,updatedAt:new Date().toISOString()};else delete c.reflections[popupI];
+  save();render();hide("reflOverlay");toast(t?"Reflection saved":"Reflection removed");
+};
+$("reflDelete").onclick=()=>{
+  if(!reflDelArmed){reflDelArmed=true;$("reflDelete").textContent="Tap again to delete this reflection";return}
+  const c=current();if(c&&c.reflections)delete c.reflections[popupI];save();render();hide("reflOverlay");toast("Reflection deleted");
+};
+
+/* ---------- new devotion ---------- */
+let pickedJournal=null,newKind="one";
+function drawNewPick(){
+  const open=journal().filter(j=>!j.usedIn);
+  $("newPick").innerHTML=open.length?`<div class="j-head">From your journal</div><div class="pick-chips">${open.map(j=>`<button type="button" data-jid="${j.id}" class="${j.id===pickedJournal?"sel":""}" aria-pressed="${j.id===pickedJournal}">${esc(j.text)}</button>`).join("")}</div>`:"";
+}
+function drawNewKind(){
+  [...$("kindPick").children].forEach(b=>b.setAttribute("aria-pressed",b.dataset.kind===newKind));
+  const c=state.commitments.find(x=>x.id===state.current[newKind]);
+  $("newTitle").textContent=newKind==="one"?"Begin a new year of prayer":"Begin twelve years of prayer";
+  $("newMeta").textContent=`Starting today, ${fmtDate(new Date())}.`+(c&&count(c)<total(c)?` Your current ${newKind==="one"?"year":"twelve years"} (${nf(count(c))} of ${nf(total(c))} days) will stay in your list so you can resume it.`:"");
+}
+function openNew(text,jid){
+  newKind=kind;pickedJournal=jid||null;$("newIntent").value=typeof text==="string"?text:"";drawNewKind();drawNewPick();show("newOverlay");setTimeout(()=>$("newIntent").focus(),50);
+}
+$("newBtn").onclick=()=>openNew();
+$("kindPick").addEventListener("click",e=>{const b=e.target.closest("[data-kind]");if(b){newKind=b.dataset.kind;drawNewKind()}});
+$("newPick").addEventListener("click",e=>{const b=e.target.closest("[data-jid]");if(!b)return;const j=journal().find(x=>x.id===b.dataset.jid);if(!j)return;
+  if(pickedJournal===j.id){pickedJournal=null;$("newIntent").value=""}else{pickedJournal=j.id;$("newIntent").value=j.text}drawNewPick()});
+$("newCancel").onclick=()=>hide("newOverlay");
+$("newGo").onclick=()=>{
+  const now=new Date().toISOString();
+  const c={id:uidGen(),kind:newKind,intention:$("newIntent").value.trim(),start:now,createdAt:Date.now(),prayed:{},madeUp:{},reflections:{},completedAt:null};
+  const pj=pickedJournal&&journal().find(x=>x.id===pickedJournal);if(pj){pj.usedIn=c.id;pj.usedAt=now}pickedJournal=null;
+  state.commitments.push(c);state.current[newKind]=c.id;kind=newKind;state.defaultKind=kind;editing=false;view.cid=null;save();hide("newOverlay");render();
+  toast(kind==="one"?"Your year of prayer has begun. Tap today’s bead when you’ve prayed.":"Your twelve years have begun. Tap today’s bead when you’ve prayed.");
+};
+
+/* ---------- prayers sheet ---------- */
+function para(arr){return (Array.isArray(arr)?arr:[arr]).map(t=>`<p>${esc(t)}</p>`).join("")}
+let lang="en";try{lang=localStorage.getItem(LS_KEY+"-lang")==="la"?"la":"en"}catch(e){}
+const T=(en,la)=>lang==="la"?la:en;
+function drawPrayers(){
+  const c=current(),P=lang==="la"?PRAYERS_LA:PRAYERS,D=P[kind];
+  $("prayTitle").textContent=T("Today’s Prayers","Orationes hodiernae");
+  const lb=$("langBtn");lb.dataset.lang=lang;lb.setAttribute("aria-label",T("Show prayers in Latin","Show prayers in English"));
+  $("prayBody").lang=lang==="la"?"la":"en";
+  const sec=(badge,title,body,open,cls)=>`<details class="psec"${open?" open":""}><summary><span class="n${cls?" "+cls:""}">${badge}</span><span class="t">${title}</span></summary><div class="prayer">${body}</div></details>`;
+  const sub=(title,text)=>`<details class="sub"><summary><span class="t">${title}</span></summary><div class="prayer"><p>${esc(text)}</p></div></details>`;
+  let sub2="";
+  if(c){const t=todayIdx(c),tot=total(c);
+    if(t<tot)sub2=c.kind==="twelve"?T(`Day ${nf(t+1)} of ${nf(tot)} · Year ${Math.floor(t/YEAR_DAYS)+1} of 12`,`Dies ${nf(t+1)} ex ${nf(tot)} · Annus ${Math.floor(t/YEAR_DAYS)+1} ex XII`):T(`Day ${t+1} of 365`,`Dies ${t+1} ex 365`);}
+  let h=`<p class="meta pray-sub">${esc(D.sheetTitle)}${sub2?" · "+sub2:""}</p>`;
+  if(c&&c.intention)h+=`<div class="pray-intent"><span class="label">${T("Praying for","Pro intentione")}</span><p>${esc(c.intention)}</p></div>`;
+  h+=sec("✝",esc(D.introTitle),para(D.intro),false,"c");
+  if(D.opening)h+=sec("✝",esc(D.openingTitle),para(D.opening),true,"c");
+  D.prayers.forEach((p,k)=>{
+    const body=`<p class="rub">${esc(D.rubric)}</p>${sub(T("Our Father","Pater Noster"),P.ourFather)}${sub(T("Hail Mary","Ave Maria"),P.hailMary)}<div style="height:10px"></div>${para(p.text)}`;
+    h+=sec(k+1,esc(p.title),body,k===0&&!D.opening);
+  });
+  if(D.closing)h+=sec("✝",esc(D.closingTitle),para(D.closing),false,"c");
+  h+=sec("★",esc(D.promisesTitle),(D.promisesIntro?`<p>${esc(D.promisesIntro)}</p>`:"")+`<ol class="promises">${D.promises.map(t=>`<li><span>${esc(t)}</span></li>`).join("")}</ol>`+(D.promisesNote?`<p class="pnote">${esc(D.promisesNote)}</p>`:""),false,"c");
+  // mark-today button
+  let act="";
+  if(c){const t=todayIdx(c),tot=total(c);
+    if(count(c)>=tot)act=`<button class="btn" disabled style="width:100%">${T("Completed. Deo gratias.","Perfectum. Deo gratias.")}</button>`;
+    else if(t<tot&&!c.prayed[t])act=`<button class="btn primary" id="sheetMark" style="width:100%">${T("I prayed today · mark it","Hodie oravi · nota")}</button>`;
+    else if(t<tot)act=`<button class="btn" disabled style="width:100%">${T("Today is marked. God bless you.","Hodie notatum est. Deus te benedicat.")}</button>`;
+    else{const m=missedList(c);if(m.length)act=`<button class="btn primary" id="sheetMakeUp" data-i="${m[0]}" style="width:100%">${T(`Mark ${dayName(c,m[0])} as made up`,`Dies ${m[0]+1} suppletus · nota`)}</button>`}}
+  else act=`<button class="btn primary" id="sheetBegin" style="width:100%">${T("Begin this devotion","Hanc devotionem incipe")}</button>`;
+  h+=`<div style="margin-top:18px">${act}</div>`;
+  h+=`<p style="margin-top:14px"><a href="${esc(SOURCE_URL[kind])}" target="_blank" rel="noopener" style="font-family:var(--f-ui);font-size:14px;color:var(--blue);font-weight:500">${T("Source: The Work of God","Fons: The Work of God")} ↗</a></p>`;
+  $("prayBody").innerHTML=h;
+}
+$("prayBody").addEventListener("click",e=>{
+  const c=current();
+  if(e.target.id==="sheetMark"&&c){markToday(c);redrawKeepingPlace()}
+  else if(e.target.id==="sheetMakeUp"&&c){const i=+e.target.dataset.i;c.prayed[i]=new Date().toISOString();c.madeUp=c.madeUp||{};c.madeUp[i]=true;if(!afterMark(c,i))toast(`${dayName(c,i)} marked as made up`);redrawKeepingPlace()}
+  else if(e.target.id==="sheetBegin"){hide("prayOverlay");openNew()}
+});
+function redrawKeepingPlace(){
+  const sh=$("prayOverlay").querySelector(".sheet"),y=sh.scrollTop,open=[...$("prayBody").querySelectorAll("details")].map(d=>d.open);
+  drawPrayers();[...$("prayBody").querySelectorAll("details")].forEach((d,i)=>{if(i<open.length)d.open=open[i]});sh.scrollTop=y;
+}
+function openPrayers(){drawPrayers();show("prayOverlay");$("prayOverlay").querySelector(".sheet").scrollTop=0}
+$("prayBtn").onclick=openPrayers;
+$("prayClose").onclick=()=>hide("prayOverlay");
+$("langBtn").onclick=()=>{lang=lang==="la"?"en":"la";try{localStorage.setItem(LS_KEY+"-lang",lang)}catch(e){}redrawKeepingPlace()};
+
+/* ---------- overlays, toast, petals ---------- */
+function show(id){$(id).hidden=false}
+function hide(id){$(id).hidden=true}
+document.querySelectorAll(".overlay").forEach(o=>o.addEventListener("click",e=>{if(e.target===o)o.hidden=true}));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelectorAll(".overlay").forEach(o=>o.hidden=true)});
+let toastT;
+function toast(msg){let t=document.querySelector(".toast");if(!t){t=document.createElement("div");t.className="toast";t.setAttribute("role","status");document.body.appendChild(t)}t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,3400)}
+function petals(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  for(let i=0;i<44;i++){const p=document.createElement("div");p.className="petal-fall";
+    p.style.left=Math.random()*100+"vw";p.style.setProperty("--dx",(Math.random()*120-60)+"px");p.style.setProperty("--rot",(Math.random()*720-360)+"deg");
+    p.style.animationDuration=(3+Math.random()*3)+"s";p.style.animationDelay=(Math.random()*1.5)+"s";
+    if(i%3===0)p.style.background="var(--gold)";else if(i%3===1)p.style.background="var(--crimson-light)";document.body.appendChild(p);setTimeout(()=>p.remove(),8000)}
+}
+function celebrate(c){
+  const per=KINDS[c.kind].perDay,tot=total(c);
+  $("celebText").textContent=c.kind==="one"
+    ?`You have prayed the fifteen prayers every day for a whole year: ${nf(tot*per)} Our Fathers and ${nf(tot*per)} Hail Marys, honoring each of Our Lord’s wounds. Thanks be to God.`
+    :`You have completed all twelve years of the seven prayers: ${nf(tot*per)} Our Fathers and ${nf(tot*per)} Hail Marys in honor of the Precious Blood. Thanks be to God.`;
+  show("celebOverlay");petals();
+}
+$("celebDone").onclick=()=>hide("celebOverlay");
+
+/* ---------- theme ---------- */
+const THEMES=["auto","light","dark"];let theme="auto";
+try{theme=localStorage.getItem(THEME_KEY)||"auto"}catch(e){}
+function applyTheme(){if(theme==="auto")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",theme);
+  $("themeBtn").textContent=theme==="auto"?"Auto":theme==="light"?"Light":"Dark"}
+$("themeBtn").onclick=()=>{theme=THEMES[(THEMES.indexOf(theme)+1)%3];try{localStorage.setItem(THEME_KEY,theme)}catch(e){}applyTheme()};
+applyTheme();
+
+/* ---------- backup / restore ---------- */
+$("exportBtn").onclick=()=>{
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+  a.download="st-bridget-backup-"+new Date().toISOString().slice(0,10)+".json";
+  document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);
+  toast("Backup saved to your downloads");
+};
+$("importBtn").onclick=()=>$("importFile").click();
+$("importFile").onchange=e=>{
+  const f=e.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||!Array.isArray(d.commitments))throw 0;
+      state=Object.assign(blankState(),d);kind=state.defaultKind==="twelve"?"twelve":"one";view.cid=null;save();render();toast("Backup restored");}catch(err){toast("That file isn’t a St Bridget backup")}
+    e.target.value="";};
+  r.readAsText(f);
+};
+
+/* ---------- intentions journal ---------- */
+function journal(){if(!Array.isArray(state.journal))state.journal=[];return state.journal}
+let jEdit=null,jDel=null;
+function drawJournal(){
+  const all=[...journal()].sort((a,b)=>b.createdAt-a.createdAt),open=all.filter(j=>!j.usedIn),done=all.filter(j=>j.usedIn);
+  const item=j=>{
+    const cm=j.usedIn&&state.commitments.find(c=>c.id===j.usedIn);
+    const meta=`Added ${fmtShort(new Date(j.createdAt))}`+(j.usedIn?` · Begun ${fmtShort(j.usedAt)}`+(cm&&count(cm)>=total(cm)?" · Completed":""):"");
+    if(jEdit===j.id)return `<li class="j-item" data-id="${j.id}"><label class="label" for="jEditBox">Edit intention</label><textarea id="jEditBox">${esc(j.text)}</textarea>
+      <div class="j-actions"><button class="link-btn" data-act="save">Save</button><button class="link-btn" data-act="cancel">Cancel</button></div></li>`;
+    const acts=jDel===j.id?`<span class="meta" style="align-self:center">Delete this entry?</span><button class="link-btn" data-act="cancel">Keep it</button><button class="link-btn" data-act="confirm" style="color:var(--crimson)">Delete</button>`
+      :`${j.usedIn?"":`<button class="link-btn" data-act="use">Start</button>`}<button class="link-btn" data-act="edit">Edit</button><button class="link-btn" data-act="del" style="color:var(--crimson)">Delete</button>`;
+    return `<li class="j-item${j.usedIn?" done":""}" data-id="${j.id}"><p class="j-text">${esc(j.text)}</p><div class="meta">${meta}</div><div class="j-actions">${acts}</div></li>`;
+  };
+  $("journalList").innerHTML=`<div class="j-head">Waiting to be prayed (${open.length})</div>`+
+    (open.length?`<ul class="j-list">${open.map(item).join("")}</ul>`:`<p class="j-empty">Nothing saved yet. Intentions you add will wait here until you pray them.</p>`)+
+    (done.length?`<div class="j-head" style="margin-top:20px">Already prayed (${done.length})</div><ul class="j-list">${done.map(item).join("")}</ul>`:"");
+}
+$("journalBtn").onclick=()=>{jEdit=null;jDel=null;drawJournal();show("journalOverlay")};
+$("journalClose").onclick=()=>hide("journalOverlay");
+$("journalAdd").onclick=()=>{const t=$("journalInput").value.trim();if(!t){$("journalInput").focus();return}
+  journal().push({id:uidGen(),text:t,createdAt:Date.now()});$("journalInput").value="";save();drawJournal();toast("Added to your journal")};
+$("journalList").addEventListener("click",e=>{
+  const b=e.target.closest("[data-act]");if(!b)return;const id=b.closest(".j-item").dataset.id,j=journal().find(x=>x.id===id);if(!j)return;
+  const a=b.dataset.act;
+  if(a==="use"){hide("journalOverlay");openNew(j.text,j.id);return}
+  if(a==="edit"){jEdit=id;jDel=null;drawJournal();$("jEditBox").focus();return}
+  if(a==="save"){const t=$("jEditBox").value.trim();if(t){j.text=t;save()}jEdit=null;drawJournal();return}
+  if(a==="del"){jDel=id;jEdit=null;drawJournal();return}
+  if(a==="confirm"){state.journal=journal().filter(x=>x.id!==id);jDel=null;save();drawJournal();toast("Entry deleted");return}
+  if(a==="cancel"){jEdit=null;jDel=null;drawJournal()}
+});
+
+/* ---------- install to home screen ---------- */
+(function(){
+  const btn=$("installBtn");
+  const standalone=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+  const onWeb=location.protocol==="https:"||location.hostname==="localhost";
+  const ua=navigator.userAgent;
+  const isIOS=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+  const shareIcon='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Share"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg>';
+  const plusIcon='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></svg>';
+  let deferred=null;
+  if(standalone()||!onWeb)return;              // already installed, or opened as a plain file
+  window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferred=e;btn.hidden=false});
+  window.addEventListener("appinstalled",()=>{btn.hidden=true;deferred=null;toast("Installed. Look for the crimson cross on your home screen.")});
+  if(isIOS)btn.hidden=false;
+  else setTimeout(()=>{btn.hidden=false},2500); // other browsers: offer the guide
+  function guide(){
+    const steps=isIOS?[
+      `Tap the <strong>Share</strong> button ${shareIcon} in Safari’s toolbar (at the bottom of the screen, or at the top on iPad).`,
+      `Scroll down and tap <strong>Add to Home Screen</strong> ${plusIcon}.`,
+      `Tap <strong>Add</strong>. The crimson cross will appear on your home screen.`
+    ]:[
+      `Open your browser’s menu (usually <strong>⋮</strong> or <strong>☰</strong>).`,
+      `Tap <strong>Install app</strong> or <strong>Add to Home screen</strong>.`,
+      `Confirm, and the crimson cross will appear on your home screen.`
+    ];
+    $("installSteps").innerHTML=steps.map(t=>`<li><span>${t}</span></li>`).join("");
+    show("installOverlay");
+  }
+  btn.onclick=async()=>{
+    if(deferred){deferred.prompt();const r=await deferred.userChoice.catch(()=>null);deferred=null;if(r&&r.outcome==="accepted")btn.hidden=true;return}
+    guide();
+  };
+  $("installDone").onclick=()=>hide("installOverlay");
+})();
+
+/* ---------- PIN lock ---------- */
+const PIN_KEY="stbridget-pin";
+let pinRec=null;try{pinRec=JSON.parse(localStorage.getItem(PIN_KEY)||"null")}catch(e){}
+function h53(str){let h1=0xdeadbeef,h2=0x41c6ce57;for(let i=0;i<str.length;i++){const c=str.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677)}
+  h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);
+  return (4294967296*(2097151&h2)+(h1>>>0)).toString(36)}
+const hashPin=(pin,salt)=>h53(salt+":"+pin+":bridget");
+let lockMode="enter",entry="",firstPin="",fails=0;
+const wrapEl=document.querySelector(".wrap");
+function setLockText(title,msg,err){$("lockTitle").textContent=title;$("lockMsg").textContent=msg||"";$("lockMsg").classList.toggle("err",!!err)}
+function drawDots(){[...$("pinDots").children].forEach((d,i)=>d.classList.toggle("on",i<entry.length))}
+function lock(mode){
+  lockMode=mode||(pinRec?"enter":"create");entry="";drawDots();
+  document.querySelectorAll(".overlay").forEach(o=>o.hidden=true);
+  document.body.classList.add("locked");wrapEl.inert=true;$("lockScreen").hidden=false;
+  $("lockCancel").style.visibility=(lockMode==="change"||lockMode==="clear")?"visible":"hidden";$("forgotBtn").hidden=lockMode!=="enter";
+  if(lockMode==="enter")setLockText("Enter your PIN","");
+  else if(lockMode==="change")setLockText("Enter your current PIN","");
+  else if(lockMode==="clear")setLockText("Clear all history?","Enter your PIN to permanently delete every year of prayer, intention, reflection and journal entry.",true);
+  else setLockText("Create a 4-digit PIN","You’ll enter it each time you open this page.");
+}
+function unlock(){document.body.classList.remove("locked");wrapEl.inert=false;$("lockScreen").hidden=true;entry="";fails=0}
+function bad(msg){const d=$("pinDots");d.classList.remove("shake");void d.offsetWidth;d.classList.add("shake");entry="";drawDots();$("lockMsg").textContent=msg;$("lockMsg").classList.add("err")}
+function submitPin(){
+  if(lockMode==="clear"){
+    if(pinRec&&hashPin(entry,pinRec.salt)===pinRec.hash){
+      const dk=state.defaultKind;state=blankState();state.defaultKind=dk;state.updatedAt=Date.now();
+      editing=false;view.cid=null;save();render();unlock();toast("History cleared");
+    }else bad("Incorrect PIN. Nothing was deleted.");
+    return;
+  }
+  if(lockMode==="enter"||lockMode==="change"){
+    if(pinRec&&hashPin(entry,pinRec.salt)===pinRec.hash){
+      if(lockMode==="change"){lockMode="create";entry="";drawDots();$("lockCancel").style.visibility="visible";setLockText("Choose a new PIN","")}
+      else unlock();
+    }else{fails++;bad(fails>=3?"Incorrect PIN. Take your time.":"Incorrect PIN")}
+  }else if(lockMode==="create"){firstPin=entry;lockMode="confirm";entry="";drawDots();setLockText("Confirm your PIN","Enter the same 4 digits again.")}
+  else if(lockMode==="confirm"){
+    if(entry===firstPin){const salt=Math.random().toString(36).slice(2,10);pinRec={salt,hash:hashPin(entry,salt)};
+      try{localStorage.setItem(PIN_KEY,JSON.stringify(pinRec))}catch(e){}
+      unlock();toast("PIN saved");}
+    else{lockMode="create";bad("Those didn’t match. Choose a PIN again.");$("lockTitle").textContent="Create a 4-digit PIN"}
+  }
+}
+function press(k){
+  if(k==="del"){entry=entry.slice(0,-1);drawDots();return}
+  if(entry.length>=4)return;entry+=k;drawDots();
+  if(entry.length===4)setTimeout(submitPin,140);
+}
+$("keypad").addEventListener("click",e=>{const b=e.target.closest("[data-k]");if(b)press(b.dataset.k)});
+document.addEventListener("keydown",e=>{if($("lockScreen").hidden)return;
+  if(/^[0-9]$/.test(e.key)){e.preventDefault();press(e.key)}else if(e.key==="Backspace"){e.preventDefault();press("del")}},true);
+$("lockCancel").onclick=()=>unlock();
+$("lockNowBtn").onclick=()=>lock();
+$("clearHistBtn").onclick=()=>{if(!state.commitments.length&&!journal().length){toast("There’s no history to clear");return}lock(pinRec?"clear":"create")};
+$("changePinBtn").onclick=()=>lock(pinRec?"change":"create");
+$("forgotBtn").onclick=()=>{
+  const f=$("lockFoot");
+  f.innerHTML=`<span class="meta" style="flex-basis:100%">A forgotten PIN can’t be recovered. You can erase everything on this page and start fresh, then restore a backup if you have one.</span>
+    <button class="link-btn" id="eraseNo">Keep trying</button><button class="link-btn" id="eraseYes" style="color:var(--crimson)">Erase and start over</button>`;
+  f.style.flexWrap="wrap";
+  $("eraseNo").onclick=resetFoot;
+  $("eraseYes").onclick=()=>{try{localStorage.removeItem(PIN_KEY);localStorage.removeItem(LS_KEY)}catch(e){}
+    pinRec=null;state=blankState();kind="one";view.cid=null;save();
+    render();resetFoot();lock("create");};
+};
+function resetFoot(){const f=$("lockFoot");f.innerHTML=`<button class="link-btn" id="forgotBtn">Forgot PIN?</button>`;f.style.flexWrap="";bindForgot()}
+const forgotHandler=$("forgotBtn").onclick;
+function bindForgot(){$("forgotBtn").onclick=forgotHandler;$("forgotBtn").hidden=lockMode!=="enter"}
+// lock again after the page has been in the background for 2 minutes; refresh "today" when returning
+let hiddenAt=0;
+document.addEventListener("visibilitychange",()=>{if(document.hidden)hiddenAt=Date.now();
+  else{if(hiddenAt&&Date.now()-hiddenAt>120000&&$("lockScreen").hidden)lock();view.cid=null;render();}});
+render();
+lock();
+$("noJsNote").hidden=true;
+/* ---------- installable app support ---------- */
+if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost")){
+  window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{})});
+}
+// ask the browser to keep this app's saved data even when storage runs low
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+</script>
+</body>
+</html>
