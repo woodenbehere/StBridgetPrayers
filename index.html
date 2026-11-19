@@ -367,7 +367,7 @@ svg.shroud{display:block;width:100%;height:auto;margin:0 auto;cursor:pointer}
     </div>
   </div>
   <footer class="site-foot">
-    <span>Jacoby / Parden Web Apps 2026</span><span class="sep">-</span><span id="appVersion">v4</span><span class="sep">-</span><a href="https://venmo.com/James-Parden" target="_blank" rel="noopener">Donate</a><span class="sep">-</span><a href="mailto:jdparden@gmail.com?subject=St%20Bridget%20Prayers" class="mail-link" aria-label="Email jdparden@gmail.com" title="Email jdparden@gmail.com"><svg width="18" height="14" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="15" rx="2.5"/><path d="M2.5 3l9.5 7 9.5-7"/></svg></a>
+    <span>Jacoby / Parden Web Apps 2026</span><span class="sep">-</span><span id="appVersion">v5</span><span class="sep">-</span><a href="https://venmo.com/James-Parden" target="_blank" rel="noopener">Donate</a><span class="sep">-</span><a href="mailto:jdparden@gmail.com?subject=St%20Bridget%20Prayers" class="mail-link" aria-label="Email jdparden@gmail.com" title="Email jdparden@gmail.com"><svg width="18" height="14" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="15" rx="2.5"/><path d="M2.5 3l9.5 7 9.5-7"/></svg></a>
   </footer>
 </div>
 
@@ -1124,13 +1124,14 @@ $("langBtn").onclick=()=>{lang=lang==="la"?"en":"la";try{localStorage.setItem(LS
 const SHROUD_N=5475;
 const SH_FRONT_X=105,SH_BACK_X=315,SH_Y=18;
 // how many marks each part of the body carries (adds up to 5,475)
-const SH_ALLOC={crownF:160,face:120,hands:100,feet:100,side:60,chest:560,loins:140,legsF:420,crownB:240,shoulder:160,back:2200,legsB:1215};
+const SH_ALLOC={crownF:160,face:120,hands:100,feet:100,side:60,chest:500,loins:120,armsF:300,legsF:420,crownB:240,shoulder:160,back:1900,armsB:300,legsB:995};
 // which part belongs to which group, and the prayer it opens (0 = first prayer)
 const SHROUD_REGIONS={
   one:[
     {name:"The crown of thorns",parts:["crownF","crownB"],prayer:0,text:"Crowned with thorns, a reed placed in His Hands."},
     {name:"The Holy Face",parts:["face"],prayer:1,text:"Buffeted and spat upon by His enemies."},
     {name:"The hands and feet",parts:["hands","feet"],prayer:2,text:"Nailed to the Cross by blow after blow."},
+    {name:"The arms",parts:["armsF","armsB"],prayer:2,text:"Stretched on the Cross and pulled from all sides, His Limbs dislocated."},
     {name:"The wounded shoulder",parts:["shoulder"],prayer:3,text:"The bruises and the weakness of all His Members."},
     {name:"The scourging",parts:["chest","loins","back"],prayer:11,text:"The multitude of wounds with which He was covered."},
     {name:"From head to foot",parts:["legsF","legsB"],prayer:9,text:"Plunged in an abyss of suffering from the soles of His Feet to the crown of His Head."},
@@ -1139,7 +1140,7 @@ const SHROUD_REGIONS={
   twelve:[
     {name:"The Circumcision",parts:["loins"],prayer:0,text:"The first wounds, the first pains, and the first Bloodshed."},
     {name:"The Mount of Olives",parts:["face"],prayer:1,text:"The suffering of His Heart and every drop of His Bloody Sweat."},
-    {name:"The Flogging",parts:["chest","back","legsF","legsB"],prayer:2,text:"The many thousands of Wounds of the Flogging."},
+    {name:"The Flogging",parts:["chest","back","armsF","armsB","legsF","legsB"],prayer:2,text:"The many thousands of Wounds of the Flogging."},
     {name:"The Crowning of Thorns",parts:["crownF","crownB"],prayer:3,text:"The Wounds and Precious Blood of His Holy Head."},
     {name:"The Carrying of the Cross",parts:["shoulder"],prayer:4,text:"His Holy Wound on His Shoulder."},
     {name:"The Crucifixion",parts:["hands","feet"],prayer:5,text:"His Wounds on the Hands and Feet."},
@@ -1147,6 +1148,8 @@ const SHROUD_REGIONS={
   ]
 };
 const SH_TORSO=[[-47,95],[-30,85],[30,85],[47,95],[44,150],[35,226],[42,276],[-42,276],[-35,226],[-44,150]];
+const SH_ARMS_F=[[-48,99,-56,196,8],[-56,196,-6,262,7],[48,99,56,196,8],[56,196,6,268,7]];
+const SH_ARMS_B=[[-48,99,-58,240,7.5],[48,99,58,240,7.5]];
 const SH_LEGS=[[-16,282,-14,420,15],[-14,420,-12,538,10],[16,282,14,420,15],[14,420,12,538,10]];
 function shInPoly(x,y,P){let c=false;for(let i=0,j=P.length-1;i<P.length;j=i++){const[xi,yi]=P[i],[xj,yj]=P[j];if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)c=!c}return c}
 function shEll(x,y,cx,cy,rx,ry){return ((x-cx)/rx)**2+((y-cy)/ry)**2}
@@ -1157,22 +1160,24 @@ const SH_TEST={
   hands:(x,y)=>shEll(x,y,-6,262,16,10)<1||shEll(x,y,6,268,16,10)<1,
   feet:(x,y)=>shEll(x,y,-11,551,9,15)<1||shEll(x,y,11,551,9,15)<1,
   side:(x,y)=>shEll(x,y,-28,172,10,14)<1,
-  chest:(x,y)=>y<228&&shInPoly(x,y,SH_TORSO)&&!SH_TEST.side(x,y),
-  loins:(x,y)=>y>=228&&shInPoly(x,y,SH_TORSO)&&!SH_TEST.hands(x,y),
+  chest:(x,y)=>y<228&&shInPoly(x,y,SH_TORSO)&&!SH_TEST.side(x,y)&&!SH_TEST.armsF(x,y),
+  loins:(x,y)=>y>=228&&shInPoly(x,y,SH_TORSO)&&!SH_TEST.hands(x,y)&&!SH_TEST.armsF(x,y),
+  armsF:(x,y)=>!SH_TEST.hands(x,y)&&!SH_TEST.side(x,y)&&(shCap(x,y,SH_ARMS_F[1])||shCap(x,y,SH_ARMS_F[3])||((shCap(x,y,SH_ARMS_F[0])||shCap(x,y,SH_ARMS_F[2]))&&!shInPoly(x,y,SH_TORSO))),
   legsF:(x,y)=>y>277&&y<536&&SH_LEGS.some(a=>shCap(x,y,a)),
   crownB:(x,y)=>{const e=shEll(x,y,0,40,22,28);return e>.42&&e<1.5},
   shoulder:(x,y)=>shEll(x,y,30,104,20,15)<1,
   back:(x,y)=>shInPoly(x,y,SH_TORSO)&&!SH_TEST.shoulder(x,y),
+  armsB:(x,y)=>SH_ARMS_B.some(a=>shCap(x,y,a))&&!shInPoly(x,y,SH_TORSO)&&!SH_TEST.shoulder(x,y),
   legsB:(x,y)=>y>277&&y<546&&SH_LEGS.some(a=>shCap(x,y,a))
 };
-const SH_BOX={crownF:[-34,6,34,44],face:[-15,32,15,68],hands:[-24,250,24,280],feet:[-22,534,22,568],side:[-40,156,-16,188],chest:[-50,86,50,230],loins:[-46,226,46,278],legsF:[-34,280,34,540],crownB:[-34,4,34,76],shoulder:[8,88,52,120],back:[-50,86,50,278],legsB:[-34,280,34,550]};
+const SH_BOX={crownF:[-34,6,34,44],face:[-15,32,15,68],hands:[-24,250,24,280],feet:[-22,534,22,568],side:[-40,156,-16,188],chest:[-50,86,50,230],loins:[-46,226,46,278],legsF:[-34,280,34,540],crownB:[-34,4,34,76],shoulder:[8,88,52,120],back:[-50,86,50,278],legsB:[-34,280,34,550],armsF:[-66,88,66,272],armsB:[-68,88,68,250]};
 let SH_DOTS=null,SH_ORDER=null;
 function shBuild(){
   if(SH_DOTS)return;
   let seed=20261119;const rnd=()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
   SH_DOTS=[];
   for(const part in SH_ALLOC){
-    const n=SH_ALLOC[part],[x0,y0,x1,y1]=SH_BOX[part],test=SH_TEST[part],front=!["crownB","shoulder","back","legsB"].includes(part),ox=front?SH_FRONT_X:SH_BACK_X;
+    const n=SH_ALLOC[part],[x0,y0,x1,y1]=SH_BOX[part],test=SH_TEST[part],front=!["crownB","shoulder","back","armsB","legsB"].includes(part),ox=front?SH_FRONT_X:SH_BACK_X;
     const grid=new Map(),cell=2,minD=part==="back"||part==="crownB"||part==="crownF"?1.75:2.1;let made=0,tries=0;
     while(made<n&&tries<n*400){
       tries++;const x=x0+rnd()*(x1-x0),y=y0+rnd()*(y1-y0);if(!test(x,y))continue;
