@@ -278,6 +278,33 @@ body.locked .wrap,body.locked .overlay{filter:blur(18px);pointer-events:none;use
 .refl-preview .label{display:inline-flex;align-items:center;gap:6px}
 .refl-preview p{margin:4px 0 0;font-family:var(--f-body);font-style:italic;font-size:18px;line-height:1.35;white-space:pre-wrap;overflow-wrap:anywhere}
 textarea.notepad{min-height:224px;line-height:32px;padding:4px 12px;margin-top:6px;background-color:var(--paper);background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 4px;background-attachment:local}
+/* Shroud button + pop-up (the cloth itself stays linen-colored in light and dark mode) */
+.shroud-btn{display:flex;align-items:center;gap:14px;width:100%;min-height:62px;border-radius:14px;border:1px solid #cdb894;background:linear-gradient(180deg,#f3e8d2,#e8d8b8);color:#4f3a1c;padding:10px 16px;text-align:left;box-shadow:var(--shadow)}
+.shroud-btn b{display:block;font-family:var(--f-display);font-weight:600;font-size:17px;letter-spacing:.02em}
+.shroud-btn small{display:block;font-family:var(--f-ui);font-size:12.5px;color:#7a5f38}
+.shroud-btn .go{margin-left:auto;font-family:var(--f-ui);font-size:20px;color:#8a6a40}
+.sh-count{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:2px 0 4px}
+.sh-count b{font-family:var(--f-display);font-weight:600;font-size:28px}
+.sh-count span{font-family:var(--f-ui);font-size:14px;color:var(--muted)}
+.sh-bar{height:6px;border-radius:3px;background:var(--bead);overflow:hidden;margin-bottom:12px}
+.sh-bar i{display:block;height:100%;background:var(--crimson)}
+.sh-frame{position:relative;border-radius:14px;overflow:auto;max-height:64vh;background:#e9dcc2;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y pinch-zoom;border:1px solid #cdb894}
+@media (min-width:760px){.sh-frame{max-height:70vh}}
+svg.shroud{display:block;width:100%;height:auto;margin:0 auto;cursor:pointer}
+.sh-tools{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:10px 0 0;flex-wrap:wrap}
+.sh-legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-family:var(--f-ui);font-size:12px;color:var(--muted)}
+.sh-legend span{display:inline-flex;align-items:center;gap:6px}
+.sh-legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.zoom-btns{display:inline-flex;border:1px solid var(--line);border-radius:99px;background:var(--bg);overflow:hidden}
+.zoom-btns button{width:44px;height:40px;border:none;background:none;font-family:var(--f-ui);font-size:20px;color:var(--ink)}
+.zoom-btns button+button{border-left:1px solid var(--line)}
+.zoom-btns button:disabled{opacity:.35}
+.sh-info{margin-top:12px;background:var(--bg);border-radius:12px;padding:12px 14px;min-height:64px}
+.sh-info h4{margin:0;font-family:var(--f-display);font-weight:600;font-size:18px}
+.sh-info p{margin:4px 0 0;font-size:16.5px;line-height:1.45}
+.sh-info .btn{margin-top:10px;width:100%;min-height:46px}
+.dots-today{animation:shglow 2.2s ease-in-out 3}
+@keyframes shglow{0%,100%{filter:drop-shadow(0 0 1px rgba(224,160,40,.6))}50%{filter:drop-shadow(0 0 5px rgba(224,160,40,1))}}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -319,6 +346,7 @@ textarea.notepad{min-height:224px;line-height:32px;padding:4px 12px;margin-top:6
     <div class="col col-b">
       <section class="intent" id="intentCard" aria-live="polite"></section>
       <section class="stats" id="stats" aria-label="Your progress"></section>
+      <button class="shroud-btn" id="shroudBtn"><svg width="34" height="44" viewBox="0 0 34 44" aria-hidden="true"><rect x="1" y="1" width="32" height="42" rx="3" fill="#e9dcc2" stroke="#b39466"/><g fill="#9c7a52" opacity=".55"><ellipse cx="11" cy="9" rx="3" ry="3.6"/><rect x="7" y="13" width="8" height="13" rx="3"/><rect x="7.5" y="26" width="3" height="14" rx="1.5"/><rect x="11.5" y="26" width="3" height="14" rx="1.5"/><ellipse cx="23" cy="9" rx="3" ry="3.6"/><rect x="19" y="13" width="8" height="13" rx="3"/><rect x="19.5" y="26" width="3" height="14" rx="1.5"/><rect x="23.5" y="26" width="3" height="14" rx="1.5"/></g><g fill="#b3202f"><circle cx="10" cy="17" r="1"/><circle cx="22" cy="19" r="1"/><circle cx="25" cy="16" r="1"/><circle cx="21" cy="30" r="1"/></g></svg><span><b id="shroudBtnTitle">The 5,475 Wounds</b><small id="shroudBtnSub">See your prayers on the Shroud</small></span><span class="go" aria-hidden="true">›</span></button>
       <div class="note" id="skipNote" hidden></div>
       <div class="actions">
         <button class="btn primary" id="prayBtn">Today’s Prayers</button>
@@ -339,7 +367,7 @@ textarea.notepad{min-height:224px;line-height:32px;padding:4px 12px;margin-top:6
     </div>
   </div>
   <footer class="site-foot">
-    <span>Jacoby / Parden Web Apps 2026</span><span class="sep">-</span><span id="appVersion">v3</span><span class="sep">-</span><a href="https://venmo.com/James-Parden" target="_blank" rel="noopener">Donate</a><span class="sep">-</span><a href="mailto:jdparden@gmail.com?subject=St%20Bridget%20Prayers" class="mail-link" aria-label="Email jdparden@gmail.com" title="Email jdparden@gmail.com"><svg width="18" height="14" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="15" rx="2.5"/><path d="M2.5 3l9.5 7 9.5-7"/></svg></a>
+    <span>Jacoby / Parden Web Apps 2026</span><span class="sep">-</span><span id="appVersion">v4</span><span class="sep">-</span><a href="https://venmo.com/James-Parden" target="_blank" rel="noopener">Donate</a><span class="sep">-</span><a href="mailto:jdparden@gmail.com?subject=St%20Bridget%20Prayers" class="mail-link" aria-label="Email jdparden@gmail.com" title="Email jdparden@gmail.com"><svg width="18" height="14" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="15" rx="2.5"/><path d="M2.5 3l9.5 7 9.5-7"/></svg></a>
   </footer>
 </div>
 
@@ -439,6 +467,19 @@ textarea.notepad{min-height:224px;line-height:32px;padding:4px 12px;margin-top:6
     <div class="sheet-head"><h3 id="viewTitle">Reflection</h3><button class="close" id="viewClose" aria-label="Close reflection">×</button></div>
     <p class="meta" id="viewMeta" style="margin:0 0 8px"></p>
     <p id="viewText" style="font-style:italic;font-size:20px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere;margin:0"></p>
+  </div>
+</div>
+
+<div class="overlay" id="shroudOverlay" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="shroudTitle">
+    <div class="sheet-head"><h3 id="shroudTitle">The 5,475 Wounds</h3><button class="close" id="shroudClose" aria-label="Close the Shroud">×</button></div>
+    <p class="meta" id="shroudSub" style="margin:0 0 8px"></p>
+    <div class="sh-count"><b id="shCount">0</b><span id="shOf"></span></div>
+    <div class="sh-bar"><i id="shBar" style="width:0"></i></div>
+    <div class="sh-frame" id="shFrame"><svg class="shroud" id="shroudSvg" viewBox="0 0 420 600" role="img" aria-label="The Shroud"></svg></div>
+    <div class="sh-tools"><div class="sh-legend"><span><i style="background:#b3202f"></i>Honored</span><span><i style="background:#e0a92e;box-shadow:0 0 4px #e0a92e"></i>Today</span><span><i style="background:rgba(110,80,50,.45)"></i>Still to honor</span></div>
+      <div class="zoom-btns" role="group" aria-label="Zoom"><button id="shZoomOut" aria-label="Zoom out">−</button><button id="shZoomIn" aria-label="Zoom in">+</button></div></div>
+    <div class="sh-info" id="shInfo" aria-live="polite"></div>
   </div>
 </div>
 
@@ -916,6 +957,8 @@ function drawKind(){
   $("eyebrow").textContent=KINDS[kind].eyebrow;
   [...$("kindSeg").children].forEach(b=>b.setAttribute("aria-pressed",b.dataset.kind===kind));
   $("newBtn").textContent=KINDS[kind].newBtn;
+  $("shroudBtnTitle").textContent=kind==="one"?"The 5,475 Wounds":"The 7 Bloodsheds";
+  $("shroudBtnSub").textContent=kind==="one"?"See your prayers on the Shroud":"See your twelve years on the Shroud";
 }
 $("kindSeg").addEventListener("click",e=>{const b=e.target.closest("[data-kind]");if(!b||b.dataset.kind===kind)return;kind=b.dataset.kind;state.defaultKind=kind;editing=false;save();render()});
 
@@ -1025,7 +1068,7 @@ function drawPrayers(){
   $("prayTitle").textContent=T("Today’s Prayers","Orationes hodiernae");
   const lb=$("langBtn");lb.dataset.lang=lang;lb.setAttribute("aria-label",T("Show prayers in Latin","Show prayers in English"));
   $("prayBody").lang=lang==="la"?"la":"en";
-  const sec=(badge,title,body,open,cls)=>`<details class="psec"${open?" open":""}><summary><span class="n${cls?" "+cls:""}">${badge}</span><span class="t">${title}</span></summary><div class="prayer">${body}</div></details>`;
+  const sec=(badge,title,body,open,cls,pk)=>`<details class="psec"${open?" open":""}${pk!=null?` data-p="${pk}"`:""}><summary><span class="n${cls?" "+cls:""}">${badge}</span><span class="t">${title}</span></summary><div class="prayer">${body}</div></details>`;
   const sub=(title,text)=>`<details class="sub"><summary><span class="t">${title}</span></summary><div class="prayer"><p>${esc(text)}</p></div></details>`;
   let sub2="";
   if(c){const t=todayIdx(c),tot=total(c);
@@ -1036,7 +1079,7 @@ function drawPrayers(){
   if(D.opening)h+=sec("✝",esc(D.openingTitle),para(D.opening),true,"c");
   D.prayers.forEach((p,k)=>{
     const body=`<p class="rub">${esc(D.rubric)}</p>${sub(T("Our Father","Pater Noster"),P.ourFather)}${sub(T("Hail Mary","Ave Maria"),P.hailMary)}<div style="height:10px"></div>${para(p.text)}`;
-    h+=sec(k+1,esc(p.title),body,k===0&&!D.opening);
+    h+=sec(k+1,esc(p.title),body,k===0&&!D.opening,"",k);
   });
   if(D.closing)h+=sec("✝",esc(D.closingTitle),para(D.closing),false,"c");
   h+=sec("★",esc(D.promisesTitle),(D.promisesIntro?`<p>${esc(D.promisesIntro)}</p>`:"")+`<ol class="promises">${D.promises.map(t=>`<li><span>${esc(t)}</span></li>`).join("")}</ol>`+(D.promisesNote?`<p class="pnote">${esc(D.promisesNote)}</p>`:""),false,"c");
@@ -1072,6 +1115,149 @@ function applySize(){$("prayBody").style.setProperty("--ps",SIZES[sizeI]);$("siz
 function setSize(d){sizeI=Math.max(0,Math.min(SIZES.length-1,sizeI+d));try{localStorage.setItem(LS_KEY+"-size",sizeI)}catch(e){}applySize()}
 $("sizeDown").onclick=()=>setSize(-1);$("sizeUp").onclick=()=>setSize(1);applySize();
 $("langBtn").onclick=()=>{lang=lang==="la"?"en":"la";try{localStorage.setItem(LS_KEY+"-lang",lang)}catch(e){}redrawKeepingPlace()};
+
+/* ---------- the Shroud: 5,475 wounds ----------
+   Two figures, front and back, side by side on a linen cloth. 5,475 small marks are placed where the
+   Passion places them (most across the back from the scourging). One mark lights for every Our Father
+   and Hail Mary of the one-year devotion; in the twelve-year devotion the 7 bloodsheds fill together
+   as the 12 years go on. Region names and the prayer each opens are in SHROUD_REGIONS below. */
+const SHROUD_N=5475;
+const SH_FRONT_X=105,SH_BACK_X=315,SH_Y=18;
+// how many marks each part of the body carries (adds up to 5,475)
+const SH_ALLOC={crownF:160,face:120,hands:100,feet:100,side:60,chest:560,loins:140,legsF:420,crownB:240,shoulder:160,back:2200,legsB:1215};
+// which part belongs to which group, and the prayer it opens (0 = first prayer)
+const SHROUD_REGIONS={
+  one:[
+    {name:"The crown of thorns",parts:["crownF","crownB"],prayer:0,text:"Crowned with thorns, a reed placed in His Hands."},
+    {name:"The Holy Face",parts:["face"],prayer:1,text:"Buffeted and spat upon by His enemies."},
+    {name:"The hands and feet",parts:["hands","feet"],prayer:2,text:"Nailed to the Cross by blow after blow."},
+    {name:"The wounded shoulder",parts:["shoulder"],prayer:3,text:"The bruises and the weakness of all His Members."},
+    {name:"The scourging",parts:["chest","loins","back"],prayer:11,text:"The multitude of wounds with which He was covered."},
+    {name:"From head to foot",parts:["legsF","legsB"],prayer:9,text:"Plunged in an abyss of suffering from the soles of His Feet to the crown of His Head."},
+    {name:"The pierced side",parts:["side"],prayer:14,text:"Pierced with a lance; blood and water issued forth."}
+  ],
+  twelve:[
+    {name:"The Circumcision",parts:["loins"],prayer:0,text:"The first wounds, the first pains, and the first Bloodshed."},
+    {name:"The Mount of Olives",parts:["face"],prayer:1,text:"The suffering of His Heart and every drop of His Bloody Sweat."},
+    {name:"The Flogging",parts:["chest","back","legsF","legsB"],prayer:2,text:"The many thousands of Wounds of the Flogging."},
+    {name:"The Crowning of Thorns",parts:["crownF","crownB"],prayer:3,text:"The Wounds and Precious Blood of His Holy Head."},
+    {name:"The Carrying of the Cross",parts:["shoulder"],prayer:4,text:"His Holy Wound on His Shoulder."},
+    {name:"The Crucifixion",parts:["hands","feet"],prayer:5,text:"His Wounds on the Hands and Feet."},
+    {name:"The Piercing of His Side",parts:["side"],prayer:6,text:"The Blood and Water from the Wound of His Divine Heart."}
+  ]
+};
+const SH_TORSO=[[-47,95],[-30,85],[30,85],[47,95],[44,150],[35,226],[42,276],[-42,276],[-35,226],[-44,150]];
+const SH_LEGS=[[-16,282,-14,420,15],[-14,420,-12,538,10],[16,282,14,420,15],[14,420,12,538,10]];
+function shInPoly(x,y,P){let c=false;for(let i=0,j=P.length-1;i<P.length;j=i++){const[xi,yi]=P[i],[xj,yj]=P[j];if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)c=!c}return c}
+function shEll(x,y,cx,cy,rx,ry){return ((x-cx)/rx)**2+((y-cy)/ry)**2}
+function shCap(x,y,a){const[x1,y1,x2,y2,r]=a,dx=x2-x1,dy=y2-y1,t=Math.max(0,Math.min(1,((x-x1)*dx+(y-y1)*dy)/(dx*dx+dy*dy)));return Math.hypot(x-x1-t*dx,y-y1-t*dy)<=r}
+const SH_TEST={
+  crownF:(x,y)=>{const e=shEll(x,y,0,40,22,28);return e>.42&&e<1.5&&y<42},
+  face:(x,y)=>shEll(x,y,0,50,14,17)<1&&!SH_TEST.crownF(x,y),
+  hands:(x,y)=>shEll(x,y,-6,262,16,10)<1||shEll(x,y,6,268,16,10)<1,
+  feet:(x,y)=>shEll(x,y,-11,551,9,15)<1||shEll(x,y,11,551,9,15)<1,
+  side:(x,y)=>shEll(x,y,-28,172,10,14)<1,
+  chest:(x,y)=>y<228&&shInPoly(x,y,SH_TORSO)&&!SH_TEST.side(x,y),
+  loins:(x,y)=>y>=228&&shInPoly(x,y,SH_TORSO)&&!SH_TEST.hands(x,y),
+  legsF:(x,y)=>y>277&&y<536&&SH_LEGS.some(a=>shCap(x,y,a)),
+  crownB:(x,y)=>{const e=shEll(x,y,0,40,22,28);return e>.42&&e<1.5},
+  shoulder:(x,y)=>shEll(x,y,30,104,20,15)<1,
+  back:(x,y)=>shInPoly(x,y,SH_TORSO)&&!SH_TEST.shoulder(x,y),
+  legsB:(x,y)=>y>277&&y<546&&SH_LEGS.some(a=>shCap(x,y,a))
+};
+const SH_BOX={crownF:[-34,6,34,44],face:[-15,32,15,68],hands:[-24,250,24,280],feet:[-22,534,22,568],side:[-40,156,-16,188],chest:[-50,86,50,230],loins:[-46,226,46,278],legsF:[-34,280,34,540],crownB:[-34,4,34,76],shoulder:[8,88,52,120],back:[-50,86,50,278],legsB:[-34,280,34,550]};
+let SH_DOTS=null,SH_ORDER=null;
+function shBuild(){
+  if(SH_DOTS)return;
+  let seed=20261119;const rnd=()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+  SH_DOTS=[];
+  for(const part in SH_ALLOC){
+    const n=SH_ALLOC[part],[x0,y0,x1,y1]=SH_BOX[part],test=SH_TEST[part],front=!["crownB","shoulder","back","legsB"].includes(part),ox=front?SH_FRONT_X:SH_BACK_X;
+    const grid=new Map(),cell=2,minD=part==="back"||part==="crownB"||part==="crownF"?1.75:2.1;let made=0,tries=0;
+    while(made<n&&tries<n*400){
+      tries++;const x=x0+rnd()*(x1-x0),y=y0+rnd()*(y1-y0);if(!test(x,y))continue;
+      const relax=tries>n*200;
+      if(!relax){const gx=Math.floor(x/cell),gy=Math.floor(y/cell);let ok=true;
+        for(let i=-1;i<=1&&ok;i++)for(let j=-1;j<=1&&ok;j++){const L=grid.get((gx+i)+","+(gy+j));if(L)for(const q of L)if(Math.hypot(q[0]-x,q[1]-y)<minD){ok=false;break}}
+        if(!ok)continue;const k=gx+","+gy;if(!grid.has(k))grid.set(k,[]);grid.get(k).push([x,y]);}
+      SH_DOTS.push({x:ox+x,y:SH_Y+y,part});made++;
+    }
+  }
+  // the order in which marks light: scattered gently over the whole body
+  SH_ORDER=SH_DOTS.map((_,i)=>i);for(let i=SH_ORDER.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[SH_ORDER[i],SH_ORDER[j]]=[SH_ORDER[j],SH_ORDER[i]]}
+}
+function shFigure(front){
+  const ox=front?SH_FRONT_X:SH_BACK_X,c="#9c7a52";
+  const torso=SH_TORSO.map(p=>p.join(",")).join(" ");
+  const line=(x1,y1,x2,y2,w)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/>`;
+  let g=`<ellipse cx="0" cy="40" rx="22" ry="28" fill="${c}"/><rect x="-9" y="62" width="18" height="24" fill="${c}"/><polygon points="${torso}" fill="${c}" stroke="${c}" stroke-width="10" stroke-linejoin="round"/>`;
+  g+=line(-16,282,-14,420,30)+line(-14,420,-12,538,20)+line(16,282,14,420,30)+line(14,420,12,538,20);
+  if(front)g+=line(-48,98,-56,196,16)+line(-56,196,-4,262,14)+line(48,98,56,196,16)+line(56,196,4,268,14)+`<ellipse cx="-6" cy="262" rx="13" ry="8" fill="${c}"/><ellipse cx="6" cy="268" rx="13" ry="8" fill="${c}"/>`;
+  else g+=line(-48,98,-58,240,15)+line(48,98,58,240,15);
+  g+=`<ellipse cx="-11" cy="551" rx="8" ry="14" fill="${c}"/><ellipse cx="11" cy="551" rx="8" ry="14" fill="${c}"/>`;
+  return `<g transform="translate(${ox},${SH_Y})" opacity=".32" filter="url(#shBlur)">${g}</g>`;
+}
+function shDotsPath(idxs,r){let d="";for(const i of idxs){const p=SH_DOTS[i];d+=`M${(p.x-r).toFixed(2)} ${p.y.toFixed(2)}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0`}return d}
+let shZoom=0,shSel=null;const SH_ZOOMS=[1,1.6,2.4,3.4];
+function shLit(c){
+  if(!c)return{lit:0,today:0};
+  const cnt=count(c),tot=total(c),pt=prayedToday(c);
+  if(c.kind==="one"){const lit=Math.min(SHROUD_N,cnt*15);return{lit,today:pt?Math.min(15,lit):0}}
+  const lit=Math.round(cnt/tot*SHROUD_N),prev=Math.round(Math.max(0,cnt-(pt?1:0))/tot*SHROUD_N);return{lit,today:lit-prev};
+}
+function drawShroud(){
+  shBuild();
+  const c=current(),k=c?c.kind:kind,{lit,today}=shLit(c);
+  const litSet=new Set(SH_ORDER.slice(0,lit)),todaySet=new Set(SH_ORDER.slice(lit-today,lit));
+  const on=[],td=[],off=[];SH_DOTS.forEach((_,i)=>{(todaySet.has(i)?td:litSet.has(i)?on:off).push(i)});
+  $("shroudTitle").textContent=k==="one"?"The 5,475 Wounds":"The 7 Bloodsheds";
+  $("shroudSub").textContent=k==="one"?"Each mark is one of the 5,475 blows. One lights for every Our Father and Hail Mary you pray.":"Each day of the seven prayers honors all seven bloodsheds. The marks fill together as your twelve years go on.";
+  if(k==="one"){$("shCount").textContent=nf(lit);$("shOf").textContent=`of ${nf(SHROUD_N)} wounds honored`}
+  else{const cnt=c?count(c):0;$("shCount").textContent=nf(cnt*7);$("shOf").textContent=`of ${nf(4380*7)} Our Fathers & Hail Marys · ${(lit/SHROUD_N*100).toFixed(1)}% of the Shroud`}
+  $("shBar").style.width=(lit/SHROUD_N*100).toFixed(2)+"%";
+  let s=`<defs><filter id="shBlur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2"/></filter>
+    <pattern id="shWeave" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0 6L6 0M-1 1L1 -1M5 7L7 5" stroke="#b39466" stroke-width=".5" opacity=".35"/></pattern>
+    <linearGradient id="shLinen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#efe3ca"/><stop offset=".5" stop-color="#e6d6b6"/><stop offset="1" stop-color="#ecdfc4"/></linearGradient></defs>
+    <rect x="0" y="0" width="420" height="600" fill="url(#shLinen)"/><rect x="0" y="0" width="420" height="600" fill="url(#shWeave)"/>
+    <g opacity=".22" fill="#8a5a2c"><rect x="24" y="0" width="5" height="600"/><rect x="391" y="0" width="5" height="600"/><path d="M24 120l14 8-14 8zM396 300l-14 8 14 8zM24 470l14 8-14 8zM396 60l-14 8 14 8z"/></g>
+    <line x1="210" y1="14" x2="210" y2="586" stroke="#b39466" stroke-width=".8" stroke-dasharray="3 5" opacity=".6"/>
+    ${shFigure(true)}${shFigure(false)}
+    <text x="${SH_FRONT_X}" y="594" text-anchor="middle" font-family="Jost,sans-serif" font-size="10" letter-spacing="1.5" fill="#7a5f38">FRONT</text>
+    <text x="${SH_BACK_X}" y="594" text-anchor="middle" font-family="Jost,sans-serif" font-size="10" letter-spacing="1.5" fill="#7a5f38">BACK</text>
+    <path d="${shDotsPath(off,1.05)}" fill="rgba(110,80,50,.42)"/>
+    <path d="${shDotsPath(on,1.3)}" fill="#b3202f"/>
+    <path class="dots-today" d="${shDotsPath(td,1.5)}" fill="#e0a92e"/>`;
+  if(shSel!==null){const R=SHROUD_REGIONS[k][shSel],sel=[];SH_DOTS.forEach((p,i)=>{if(R.parts.includes(p.part))sel.push(i)});
+    s+=`<path d="${shDotsPath(sel,1.9)}" fill="none" stroke="#1f4f8f" stroke-width=".4" opacity=".55"/>`}
+  $("shroudSvg").innerHTML=s;
+  $("shroudSvg").setAttribute("aria-label",`The Shroud, front and back: ${nf(lit)} of ${nf(SHROUD_N)} marks lit`);
+  drawShInfo();
+}
+function drawShInfo(){
+  const c=current(),k=c?c.kind:kind,el=$("shInfo");
+  if(shSel===null){el.innerHTML=`<p style="margin:0">${c?"Tap any part of the Shroud to see which prayer honors it.":"Begin your devotion to start honoring them. Tap any part of the Shroud to see which prayer honors it."}</p>`;return}
+  const R=SHROUD_REGIONS[k][shSel],{lit}=shLit(c),litSet=new Set(SH_ORDER.slice(0,lit));
+  let tot=0,on=0;SH_DOTS.forEach((p,i)=>{if(R.parts.includes(p.part)){tot++;if(litSet.has(i))on++}});
+  const P=PRAYERS[k].prayers[R.prayer];
+  el.innerHTML=`<h4>${esc(R.name)}</h4><p>${esc(R.text)}</p><p class="meta" style="margin-top:6px">${nf(on)} of ${nf(tot)} marks lit · Honored in the ${esc(P.title.split(" - ")[0])}</p><button class="btn" id="shRead">Read the ${esc(P.title.split(" - ")[0])}</button>`;
+  $("shRead").onclick=()=>{const pk=R.prayer;hide("shroudOverlay");drawPrayers();show("prayOverlay");
+    const sh=$("prayOverlay").querySelector(".sheet");$("prayBody").querySelectorAll("details.psec").forEach(d=>{if(d.dataset.p!=null)d.open=d.dataset.p==String(pk)});
+    const d=$("prayBody").querySelector(`details[data-p="${pk}"]`);sh.scrollTop=0;if(d)setTimeout(()=>{sh.scrollTop+=d.getBoundingClientRect().top-sh.getBoundingClientRect().top-sh.querySelector(".sheet-head").offsetHeight-4},30)};
+}
+function applyShZoom(){const z=SH_ZOOMS[shZoom];$("shroudSvg").style.width=(z*100)+"%";$("shZoomOut").disabled=shZoom===0;$("shZoomIn").disabled=shZoom===SH_ZOOMS.length-1}
+function shZoomTo(n,cx,cy){const f=$("shFrame"),old=SH_ZOOMS[shZoom];shZoom=Math.max(0,Math.min(SH_ZOOMS.length-1,n));const r=SH_ZOOMS[shZoom]/old;
+  const px=cx!=null?cx:f.clientWidth/2,py=cy!=null?cy:f.clientHeight/2;const sx=(f.scrollLeft+px)*r-px,sy=(f.scrollTop+py)*r-py;applyShZoom();f.scrollLeft=sx;f.scrollTop=sy}
+$("shZoomIn").onclick=()=>shZoomTo(shZoom+1);
+$("shZoomOut").onclick=()=>shZoomTo(shZoom-1);
+$("shroudSvg").addEventListener("click",e=>{
+  const svg=$("shroudSvg"),pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const m=svg.getScreenCTM();if(!m)return;const q=pt.matrixTransform(m.inverse());
+  let best=null,bd=14;for(const p of SH_DOTS){const d=Math.hypot(p.x-q.x,p.y-q.y);if(d<bd){bd=d;best=p}}
+  const k=current()?current().kind:kind;
+  if(!best){shSel=null}else{const r=SHROUD_REGIONS[k].findIndex(R=>R.parts.includes(best.part));shSel=r===shSel?null:r}
+  drawShroud();
+});
+$("shroudBtn").onclick=()=>{shSel=null;shZoom=0;drawShroud();applyShZoom();show("shroudOverlay");$("shroudOverlay").querySelector(".sheet").scrollTop=0;$("shFrame").scrollTop=0};
+$("shroudClose").onclick=()=>hide("shroudOverlay");
 
 /* ---------- overlays, toast, petals ---------- */
 function show(id){$(id).hidden=false}
