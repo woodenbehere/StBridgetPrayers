@@ -203,6 +203,9 @@ summary .n.c{background:none;color:var(--crimson);border-color:var(--crimson);fo
 summary .t{flex:1;min-width:0}
 summary::after{content:"+";flex:none;margin-left:auto;font-family:var(--f-ui);font-size:24px;font-weight:400;color:var(--muted);width:24px;text-align:center}
 details[open] > summary::after{content:"–"}
+details.psec .prayer p:not(.rub),details.psec > summary .t{transition:color .6s ease}
+details.psec.done > summary .t,details.psec.done .prayer p:not(.rub){color:var(--crimson)}
+details.psec.done > summary .n{background:var(--crimson);border-color:var(--crimson);color:#fff}
 details.sub{border:none;margin:0 0 4px;background:var(--bg);border-radius:12px;padding:0 12px}
 details.sub > summary{min-height:46px;font-family:var(--f-ui);font-size:14.5px;font-weight:500;color:var(--blue);letter-spacing:.02em}
 details.sub > summary::after{font-size:20px}
@@ -367,7 +370,7 @@ svg.shroud{display:block;width:100%;height:auto;margin:0 auto;cursor:pointer}
     </div>
   </div>
   <footer class="site-foot">
-    <span>Jacoby / Parden Web Apps 2026</span><span class="sep">-</span><span id="appVersion">v5</span><span class="sep">-</span><a href="https://venmo.com/James-Parden" target="_blank" rel="noopener">Donate</a><span class="sep">-</span><a href="mailto:jdparden@gmail.com?subject=St%20Bridget%20Prayers" class="mail-link" aria-label="Email jdparden@gmail.com" title="Email jdparden@gmail.com"><svg width="18" height="14" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="15" rx="2.5"/><path d="M2.5 3l9.5 7 9.5-7"/></svg></a>
+    <span>Jacoby / Parden Web Apps 2026</span><span class="sep">-</span><span id="appVersion">v6</span><span class="sep">-</span><a href="https://venmo.com/James-Parden" target="_blank" rel="noopener">Donate</a><span class="sep">-</span><a href="mailto:jdparden@gmail.com?subject=St%20Bridget%20Prayers" class="mail-link" aria-label="Email jdparden@gmail.com" title="Email jdparden@gmail.com"><svg width="18" height="14" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="15" rx="2.5"/><path d="M2.5 3l9.5 7 9.5-7"/></svg></a>
   </footer>
 </div>
 
@@ -1068,7 +1071,7 @@ function drawPrayers(){
   $("prayTitle").textContent=T("Today’s Prayers","Orationes hodiernae");
   const lb=$("langBtn");lb.dataset.lang=lang;lb.setAttribute("aria-label",T("Show prayers in Latin","Show prayers in English"));
   $("prayBody").lang=lang==="la"?"la":"en";
-  const sec=(badge,title,body,open,cls,pk)=>`<details class="psec"${open?" open":""}${pk!=null?` data-p="${pk}"`:""}><summary><span class="n${cls?" "+cls:""}">${badge}</span><span class="t">${title}</span></summary><div class="prayer">${body}</div></details>`;
+  const sec=(badge,title,body,open,cls,pk,st)=>`<details class="psec"${open?" open":""}${pk!=null?` data-p="${pk}"`:""}${st!=null?` data-step="${st}"`:""}><summary><span class="n${cls?" "+cls:""}">${badge}</span><span class="t">${title}</span></summary><div class="prayer">${body}</div></details>`;
   const sub=(title,text)=>`<details class="sub"><summary><span class="t">${title}</span></summary><div class="prayer"><p>${esc(text)}</p></div></details>`;
   let sub2="";
   if(c){const t=todayIdx(c),tot=total(c);
@@ -1076,12 +1079,13 @@ function drawPrayers(){
   let h=`<p class="meta pray-sub">${esc(D.sheetTitle)}${sub2?" · "+sub2:""}</p>`;
   if(c&&c.intention)h+=`<div class="pray-intent"><span class="label">${T("Praying for","Pro intentione")}</span><p>${esc(c.intention)}</p></div>`;
   h+=sec("✝",esc(D.introTitle),para(D.intro),false,"c");
-  if(D.opening)h+=sec("✝",esc(D.openingTitle),para(D.opening),true,"c");
+  let step=0;
+  if(D.opening)h+=sec("✝",esc(D.openingTitle),para(D.opening),false,"c",null,step++);
   D.prayers.forEach((p,k)=>{
     const body=`<p class="rub">${esc(D.rubric)}</p>${sub(T("Our Father","Pater Noster"),P.ourFather)}${sub(T("Hail Mary","Ave Maria"),P.hailMary)}<div style="height:10px"></div>${para(p.text)}`;
-    h+=sec(k+1,esc(p.title),body,k===0&&!D.opening,"",k);
+    h+=sec(k+1,esc(p.title),body,false,"",k,step++);
   });
-  if(D.closing)h+=sec("✝",esc(D.closingTitle),para(D.closing),false,"c");
+  if(D.closing)h+=sec("✝",esc(D.closingTitle),para(D.closing),false,"c",null,step++);
   h+=sec("★",esc(D.promisesTitle),(D.promisesIntro?`<p>${esc(D.promisesIntro)}</p>`:"")+`<ol class="promises">${D.promises.map(t=>`<li><span>${esc(t)}</span></li>`).join("")}</ol>`+(D.promisesNote?`<p class="pnote">${esc(D.promisesNote)}</p>`:""),false,"c");
   // mark-today button
   let act="";
@@ -1094,7 +1098,24 @@ function drawPrayers(){
   h+=`<div style="margin-top:18px">${act}</div>`;
   h+=`<p style="margin-top:14px"><a href="${esc(SOURCE_URL[kind])}" target="_blank" rel="noopener" style="font-family:var(--f-ui);font-size:14px;color:var(--blue);font-weight:500">${T("Source: The Work of God","Fons: The Work of God")} ↗</a></p>`;
   $("prayBody").innerHTML=h;
+  applyProgress();
 }
+/* Today's progress through the prayers: opening a prayer turns every prayer before it crimson.
+   Kept per devotion for today only, so it starts fresh each new day. */
+const PROG_KEY=LS_KEY+"-progress";
+function todayKey(){const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+function getProgress(){try{const p=JSON.parse(localStorage.getItem(PROG_KEY)||"{}");return p.day===todayKey()?p:{day:todayKey()}}catch(e){return{day:todayKey()}}}
+function reachedStep(){const p=getProgress(),c=current();return (p[kind]&&(!c||p[kind].cid===c.id))?p[kind].step:-1}
+function setReached(st){const p=getProgress(),c=current();if(st<=reachedStep())return;p[kind]={step:st,cid:c?c.id:null};try{localStorage.setItem(PROG_KEY,JSON.stringify(p))}catch(e){}}
+function applyProgress(){
+  const c=current(),t=c?todayIdx(c):-1,allDone=!!(c&&c.prayed[t]),r=reachedStep();
+  $("prayBody").querySelectorAll("details.psec[data-step]").forEach(d=>d.classList.toggle("done",allDone||+d.dataset.step<r));
+}
+$("prayBody").addEventListener("click",e=>{
+  const sm=e.target.closest("summary");if(!sm)return;const d=sm.parentElement;
+  if(!d.classList.contains("psec")||d.dataset.step==null||d.open)return; // only when a prayer is being opened
+  setReached(+d.dataset.step);applyProgress();
+});
 $("prayBody").addEventListener("click",e=>{
   const c=current();
   if(e.target.id==="sheetMark"&&c){markToday(c);redrawKeepingPlace()}
@@ -1102,6 +1123,7 @@ $("prayBody").addEventListener("click",e=>{
   else if(e.target.id==="sheetBegin"){hide("prayOverlay");openNew()}
 });
 function redrawKeepingPlace(){
+  // (applyProgress runs inside drawPrayers)
   const sh=$("prayOverlay").querySelector(".sheet"),y=sh.scrollTop,open=[...$("prayBody").querySelectorAll("details")].map(d=>d.open);
   drawPrayers();[...$("prayBody").querySelectorAll("details")].forEach((d,i)=>{if(i<open.length)d.open=open[i]});sh.scrollTop=y;
 }
